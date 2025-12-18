@@ -10,7 +10,7 @@
 
 ## 📖 À propos de ce cours
 
-Ce cours est conçu pour les débutants souhaitant **maîtriser la Programmation Orientée Objet** en utilisant Java. Il couvre progressivement tous les concepts fondamentaux jusqu'aux notions avancées.
+Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation Orientée Objet** en utilisant Java. Il couvre progressivement tous les concepts fondamentaux jusqu'aux notions avancées.
 
 ### 🎓 Objectifs pédagogiques
 
@@ -163,7 +163,7 @@ XX-Nom-Section/
 ## 🎯 Progression Recommandée
 
 | Semaine | Sections | Temps estimé |
-|---------|----------|-------------|
+|---------|----------|--------------|
 | 1 | Sections 1-2 | 6h |
 | 2 | Section 3 | 8h |
 | 3 | Section 4 | 10h |
@@ -198,7 +198,7 @@ Ce projet est sous licence MIT. Voir [LICENSE](LICENSE) pour plus d'informations
 
 **Abdelweheb GUEDDES**
 - 🌐 GitHub : [@GUEDDES](https://github.com/GUEDDES)
-- 🏢 Entreprise : AbdouSoft
+- 🎓 Contexte : Cours académique - Programmation Orientée Objet
 
 ---
 
@@ -208,7 +208,7 @@ Si ce cours vous a été utile :
 
 - ⭐ **Star** ce dépôt
 - 🔄 **Fork** pour vos propres projets
-- 📢 **Partagez** avec vos amis
+- 📢 **Partagez** avec vos collègues étudiants
 
 ---
 
