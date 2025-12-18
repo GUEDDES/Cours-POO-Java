@@ -1,120 +1,135 @@
 /**
- * Exemple : Gestion de Comptes Bancaires
- * Démontre : Constructeurs, this, surcharge, encapsulation basique
+ * Exemple 2 : Compte Bancaire
+ * 
+ * Objectif : Illustrer l'encapsulation et la validation dans les méthodes
+ * Concepts :
+ * - Attributs privés
+ * - Validation des données
+ * - Getters (pas de setters pour la sécurité)
+ * - Méthodes métier
+ * 
+ * @author Cours POO Java
  */
-
-class CompteBancaire {
-    // Attributs
+public class CompteBancaire {
+    // Attributs privés
     private String numeroCompte;
     private String titulaire;
     private double solde;
-    private static int compteurComptes = 0;  // Compteur de comptes créés
+    private static int compteurComptes = 0;
     
-    // Constructeur complet
-    public CompteBancaire(String numeroCompte, String titulaire, double soldeInitial) {
-        this.numeroCompte = numeroCompte;
+    // Constructeur
+    public CompteBancaire(String titulaire, double soldeInitial) {
+        if (soldeInitial < 0) {
+            throw new IllegalArgumentException("Le solde initial ne peut pas être négatif");
+        }
+        
+        compteurComptes++;
+        this.numeroCompte = "CPT" + String.format("%06d", compteurComptes);
         this.titulaire = titulaire;
         this.solde = soldeInitial;
-        compteurComptes++;
-        System.out.println("✅ Compte créé : " + numeroCompte);
-    }
-    
-    // Constructeur avec solde initial à 0
-    public CompteBancaire(String numeroCompte, String titulaire) {
-        this(numeroCompte, titulaire, 0.0);  // Appel du constructeur complet
-    }
-    
-    // Méthode : Dépôt
-    public void deposer(double montant) {
-        if (montant <= 0) {
-            System.out.println("❌ Montant invalide");
-            return;
-        }
-        solde += montant;
-        System.out.println("💵 Dépôt de " + montant + "€. Nouveau solde : " + solde + "€");
-    }
-    
-    // Méthode : Retrait
-    public boolean retirer(double montant) {
-        if (montant <= 0) {
-            System.out.println("❌ Montant invalide");
-            return false;
-        }
         
-        if (montant > solde) {
-            System.out.println("❌ Solde insuffisant. Disponible : " + solde + "€");
-            return false;
-        }
-        
-        solde -= montant;
-        System.out.println("💸 Retrait de " + montant + "€. Nouveau solde : " + solde + "€");
-        return true;
+        System.out.println("✅ Compte créé : " + numeroCompte + " pour " + titulaire);
     }
     
-    // Méthode : Virement vers un autre compte
-    public boolean virer(double montant, CompteBancaire destinataire) {
-        if (this.retirer(montant)) {
-            destinataire.deposer(montant);
-            System.out.println("🔄 Virement de " + montant + "€ vers " + destinataire.numeroCompte);
-            return true;
-        }
-        return false;
-    }
-    
-    // Méthode : Afficher les informations
-    public void afficher() {
-        System.out.println("\n========== COMPTE BANCAIRE ==========");
-        System.out.println("Numéro  : " + numeroCompte);
-        System.out.println("Titulaire : " + titulaire);
-        System.out.println("Solde     : " + solde + "€");
-        System.out.println("====================================\n");
-    }
-    
-    // Getters
+    // Getters (pas de setters pour la sécurité)
     public String getNumeroCompte() {
         return numeroCompte;
+    }
+    
+    public String getTitulaire() {
+        return titulaire;
     }
     
     public double getSolde() {
         return solde;
     }
     
-    // Méthode statique
+    // Méthode pour déposer de l'argent
+    public void deposer(double montant) {
+        if (montant <= 0) {
+            System.out.println("❌ Le montant doit être positif");
+            return;
+        }
+        
+        solde += montant;
+        System.out.printf("✅ Dépôt de %.2f€ effectué. Nouveau solde : %.2f€%n", montant, solde);
+    }
+    
+    // Méthode pour retirer de l'argent
+    public boolean retirer(double montant) {
+        if (montant <= 0) {
+            System.out.println("❌ Le montant doit être positif");
+            return false;
+        }
+        
+        if (montant > solde) {
+            System.out.printf("❌ Solde insuffisant. Disponible : %.2f€, Demandé : %.2f€%n", solde, montant);
+            return false;
+        }
+        
+        solde -= montant;
+        System.out.printf("✅ Retrait de %.2f€ effectué. Nouveau solde : %.2f€%n", montant, solde);
+        return true;
+    }
+    
+    // Méthode pour effectuer un virement
+    public boolean virement(CompteBancaire destinataire, double montant) {
+        if (destinataire == null) {
+            System.out.println("❌ Destinataire invalide");
+            return false;
+        }
+        
+        System.out.println("\n💸 Virement de " + montant + "€ vers " + destinataire.getTitulaire());
+        
+        if (this.retirer(montant)) {
+            destinataire.deposer(montant);
+            System.out.println("✅ Virement réussi");
+            return true;
+        }
+        
+        System.out.println("❌ Virement échoué");
+        return false;
+    }
+    
+    // Méthode pour afficher le relevé
+    public void afficherReleve() {
+        System.out.println("\n========== RELEVÉ DE COMPTE ==========");
+        System.out.println("Numéro  : " + numeroCompte);
+        System.out.println("Titulaire : " + titulaire);
+        System.out.printf("Solde   : %.2f€%n", solde);
+        System.out.println("======================================\n");
+    }
+    
+    // Méthode statique pour obtenir le nombre de comptes
     public static int getNombreComptes() {
         return compteurComptes;
     }
-}
-
-// Classe de test
-public class TestCompteBancaire {
+    
+    // Programme de test
     public static void main(String[] args) {
-        System.out.println("\n🏛️ === SYSTÈME BANCAIRE ===\n");
+        System.out.println("=== TEST COMPTE BANCAIRE ===");
         
-        // Création de comptes
-        CompteBancaire compte1 = new CompteBancaire("FR001", "Alice Dupont", 1000);
-        CompteBancaire compte2 = new CompteBancaire("FR002", "Bob Martin");
+        // Créer des comptes
+        CompteBancaire compte1 = new CompteBancaire("Alice Dupont", 1000.0);
+        CompteBancaire compte2 = new CompteBancaire("Bob Martin", 500.0);
         
-        System.out.println("\n📊 Nombre de comptes créés : " + CompteBancaire.getNombreComptes());
+        System.out.println("\nNombre total de comptes : " + CompteBancaire.getNombreComptes());
         
-        // Opérations sur compte1
-        System.out.println("\n--- Opérations sur Compte 1 ---");
-        compte1.afficher();
-        compte1.deposer(500);
-        compte1.retirer(300);
-        compte1.retirer(2000);  // Échec : solde insuffisant
+        // Afficher les relevés initiaux
+        compte1.afficherReleve();
+        compte2.afficherReleve();
         
-        // Opérations sur compte2
-        System.out.println("\n--- Opérations sur Compte 2 ---");
-        compte2.afficher();
-        compte2.deposer(2000);
+        // Opérations bancaires
+        System.out.println("--- Opérations ---");
+        compte1.deposer(200);
+        compte1.retirer(150);
+        compte1.retirer(2000);  // Tentative de retrait supérieur au solde
         
         // Virement
-        System.out.println("\n--- Virement ---");
-        compte1.virer(200, compte2);
+        compte1.virement(compte2, 300);
         
-        // État final
-        System.out.println("\n--- ÉTAT FINAL ---");
-        compte1.afficher();
-        compte2.afficher();
+        // Afficher les relevés finaux
+        compte1.afficherReleve();
+        compte2.afficherReleve();
     }
 }

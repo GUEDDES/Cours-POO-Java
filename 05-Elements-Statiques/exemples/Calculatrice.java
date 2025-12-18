@@ -1,63 +1,106 @@
 /**
- * Exemple : Calculatrice Statique
- * Démontre : Méthodes statiques, constantes, classe utilitaire
+ * Exemple : Classe Utilitaire Calculatrice
+ * 
+ * Objectif : Illustrer l'utilisation de méthodes statiques et constantes
+ * Concepts :
+ * - Méthodes statiques
+ * - Constantes (static final)
+ * - Constructeur privé (empêcher l'instanciation)
+ * - Classe utilitaire
+ * 
+ * @author Cours POO Java
  */
-
-class Calculatrice {
-    // Constantes mathématiques
-    public static final double PI = 3.14159265359;
-    public static final double E = 2.71828182846;
+public class Calculatrice {
     
-    // Constructeur privé (empêche l'instanciation)
+    // Constantes mathématiques
+    public static final double PI = 3.141592653589793;
+    public static final double E = 2.718281828459045;
+    public static final double PHI = 1.618033988749895;  // Nombre d'or
+    
+    // Constructeur privé pour empêcher l'instanciation
     private Calculatrice() {
         throw new AssertionError("Classe utilitaire : ne pas instancier");
     }
     
-    // Opérations de base
-    public static double addition(double a, double b) {
+    // ========== OPÉRATIONS DE BASE ==========
+    
+    public static double additionner(double a, double b) {
         return a + b;
     }
     
-    public static double soustraction(double a, double b) {
+    public static double soustraire(double a, double b) {
         return a - b;
     }
     
-    public static double multiplication(double a, double b) {
+    public static double multiplier(double a, double b) {
         return a * b;
     }
     
-    public static double division(double a, double b) {
+    public static double diviser(double a, double b) {
         if (b == 0) {
             throw new ArithmeticException("Division par zéro impossible");
         }
         return a / b;
     }
     
-    // Puissance
+    // ========== PUISSANCES ET RACINES ==========
+    
+    public static double carre(double n) {
+        return n * n;
+    }
+    
+    public static double cube(double n) {
+        return n * n * n;
+    }
+    
     public static double puissance(double base, int exposant) {
+        if (exposant == 0) return 1;
+        if (exposant < 0) return 1.0 / puissance(base, -exposant);
+        
         double resultat = 1;
-        for (int i = 0; i < Math.abs(exposant); i++) {
+        for (int i = 0; i < exposant; i++) {
             resultat *= base;
         }
-        return exposant >= 0 ? resultat : 1 / resultat;
+        return resultat;
     }
     
-    // Racine carrée
-    public static double racineCarree(double nombre) {
-        if (nombre < 0) {
-            throw new IllegalArgumentException("Racine carrée de nombre négatif");
+    public static double racineCarree(double n) {
+        if (n < 0) {
+            throw new IllegalArgumentException("Racine carrée d'un nombre négatif");
         }
-        return Math.sqrt(nombre);
+        return Math.sqrt(n);
     }
     
-    // Factorielle
+    // ========== GÉOMÉTRIE ==========
+    
+    public static double aireRectangle(double longueur, double largeur) {
+        return longueur * largeur;
+    }
+    
+    public static double aireCercle(double rayon) {
+        return PI * rayon * rayon;
+    }
+    
+    public static double aireTriangle(double base, double hauteur) {
+        return (base * hauteur) / 2;
+    }
+    
+    public static double perimetreCercle(double rayon) {
+        return 2 * PI * rayon;
+    }
+    
+    public static double perimetre Rectangle(double longueur, double largeur) {
+        return 2 * (longueur + largeur);
+    }
+    
+    // ========== FONCTIONS MATHÉMATIQUES ==========
+    
     public static long factorielle(int n) {
         if (n < 0) {
-            throw new IllegalArgumentException("Factorielle de nombre négatif");
+            throw new IllegalArgumentException("Factorielle définie pour n >= 0");
         }
-        if (n == 0 || n == 1) {
-            return 1;
-        }
+        if (n == 0 || n == 1) return 1;
+        
         long resultat = 1;
         for (int i = 2; i <= n; i++) {
             resultat *= i;
@@ -65,138 +108,117 @@ class Calculatrice {
         return resultat;
     }
     
-    // Aire du cercle
-    public static double aireCercle(double rayon) {
-        if (rayon < 0) {
-            throw new IllegalArgumentException("Rayon négatif");
-        }
-        return PI * rayon * rayon;
+    public static boolean estPair(int n) {
+        return n % 2 == 0;
     }
     
-    // Périmètre du cercle
-    public static double perimetreCercle(double rayon) {
-        if (rayon < 0) {
-            throw new IllegalArgumentException("Rayon négatif");
+    public static boolean estPremier(int n) {
+        if (n < 2) return false;
+        if (n == 2) return true;
+        if (n % 2 == 0) return false;
+        
+        for (int i = 3; i <= Math.sqrt(n); i += 2) {
+            if (n % i == 0) return false;
         }
-        return 2 * PI * rayon;
+        return true;
     }
     
-    // Aire du rectangle
-    public static double aireRectangle(double longueur, double largeur) {
-        if (longueur < 0 || largeur < 0) {
-            throw new IllegalArgumentException("Dimensions négatives");
+    public static int pgcd(int a, int b) {
+        a = Math.abs(a);
+        b = Math.abs(b);
+        
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
         }
-        return longueur * largeur;
+        return a;
     }
     
-    // Aire du triangle
-    public static double aireTriangle(double base, double hauteur) {
-        if (base < 0 || hauteur < 0) {
-            throw new IllegalArgumentException("Dimensions négatives");
-        }
-        return (base * hauteur) / 2;
+    public static int ppcm(int a, int b) {
+        return Math.abs(a * b) / pgcd(a, b);
     }
     
-    // Moyenne de plusieurs nombres
+    // ========== STATISTIQUES ==========
+    
     public static double moyenne(double... nombres) {
         if (nombres.length == 0) {
-            throw new IllegalArgumentException("Aucun nombre fourni");
+            throw new IllegalArgumentException("Au moins un nombre requis");
         }
+        
         double somme = 0;
-        for (double nombre : nombres) {
-            somme += nombre;
+        for (double n : nombres) {
+            somme += n;
         }
         return somme / nombres.length;
     }
     
-    // Maximum de plusieurs nombres
+    public static double min(double... nombres) {
+        if (nombres.length == 0) {
+            throw new IllegalArgumentException("Au moins un nombre requis");
+        }
+        
+        double minimum = nombres[0];
+        for (double n : nombres) {
+            if (n < minimum) minimum = n;
+        }
+        return minimum;
+    }
+    
     public static double max(double... nombres) {
         if (nombres.length == 0) {
-            throw new IllegalArgumentException("Aucun nombre fourni");
+            throw new IllegalArgumentException("Au moins un nombre requis");
         }
+        
         double maximum = nombres[0];
-        for (double nombre : nombres) {
-            if (nombre > maximum) {
-                maximum = nombre;
-            }
+        for (double n : nombres) {
+            if (n > maximum) maximum = n;
         }
         return maximum;
     }
     
-    // Minimum de plusieurs nombres
-    public static double min(double... nombres) {
-        if (nombres.length == 0) {
-            throw new IllegalArgumentException("Aucun nombre fourni");
-        }
-        double minimum = nombres[0];
-        for (double nombre : nombres) {
-            if (nombre < minimum) {
-                minimum = nombre;
-            }
-        }
-        return minimum;
-    }
-}
-
-// Classe de test
-public class TestCalculatrice {
+    // Programme de test
     public static void main(String[] args) {
-        System.out.println("\n🧮 === CALCULATRICE STATIQUE ===\n");
-        
-        // Opérations de base
-        System.out.println("--- Opérations de Base ---");
-        System.out.println("10 + 5 = " + Calculatrice.addition(10, 5));
-        System.out.println("10 - 5 = " + Calculatrice.soustraction(10, 5));
-        System.out.println("10 * 5 = " + Calculatrice.multiplication(10, 5));
-        System.out.println("10 / 5 = " + Calculatrice.division(10, 5));
-        
-        // Puissance et racine
-        System.out.println("\n--- Puissance et Racine ---");
-        System.out.println("2^8 = " + Calculatrice.puissance(2, 8));
-        System.out.println("2^-3 = " + Calculatrice.puissance(2, -3));
-        System.out.println("√16 = " + Calculatrice.racineCarree(16));
-        
-        // Factorielle
-        System.out.println("\n--- Factorielle ---");
-        System.out.println("5! = " + Calculatrice.factorielle(5));
-        System.out.println("10! = " + Calculatrice.factorielle(10));
-        
-        // Géométrie
-        System.out.println("\n--- Géométrie ---");
-        System.out.printf("Aire cercle (r=5) = %.2f\n", Calculatrice.aireCercle(5));
-        System.out.printf("Périmètre cercle (r=5) = %.2f\n", Calculatrice.perimetreCercle(5));
-        System.out.println("Aire rectangle (10x5) = " + Calculatrice.aireRectangle(10, 5));
-        System.out.println("Aire triangle (b=10, h=6) = " + Calculatrice.aireTriangle(10, 6));
-        
-        // Statistiques
-        System.out.println("\n--- Statistiques ---");
-        System.out.println("Moyenne (10, 20, 30, 40, 50) = " + 
-                           Calculatrice.moyenne(10, 20, 30, 40, 50));
-        System.out.println("Max (5, 12, 3, 18, 9) = " + 
-                           Calculatrice.max(5, 12, 3, 18, 9));
-        System.out.println("Min (5, 12, 3, 18, 9) = " + 
-                           Calculatrice.min(5, 12, 3, 18, 9));
+        System.out.println("=== TEST CALCULATRICE ===");
         
         // Constantes
         System.out.println("\n--- Constantes ---");
-        System.out.println("PI = " + Calculatrice.PI);
-        System.out.println("E = " + Calculatrice.E);
+        System.out.println("π = " + Calculatrice.PI);
+        System.out.println("e = " + Calculatrice.E);
+        System.out.println("φ (nombre d'or) = " + Calculatrice.PHI);
         
-        // Test d'erreur
-        System.out.println("\n--- Test d'Erreur ---");
-        try {
-            Calculatrice.division(10, 0);
-        } catch (ArithmeticException e) {
-            System.out.println("❌ Exception capturée : " + e.getMessage());
-        }
+        // Opérations de base
+        System.out.println("\n--- Opérations de base ---");
+        System.out.println("5 + 3 = " + Calculatrice.additionner(5, 3));
+        System.out.println("5 - 3 = " + Calculatrice.soustraire(5, 3));
+        System.out.println("5 × 3 = " + Calculatrice.multiplier(5, 3));
+        System.out.println("10 ÷ 2 = " + Calculatrice.diviser(10, 2));
         
-        // Tentative d'instanciation (va échouer)
-        System.out.println("\n--- Tentative d'Instanciation ---");
-        try {
-            // Calculatrice calc = new Calculatrice();  // Décommenter pour voir l'erreur
-            System.out.println("✅ Classe utilitaire : instanciation bloquée");
-        } catch (AssertionError e) {
-            System.out.println("❌ " + e.getMessage());
-        }
+        // Puissances
+        System.out.println("\n--- Puissances ---");
+        System.out.println("5² = " + Calculatrice.carre(5));
+        System.out.println("3³ = " + Calculatrice.cube(3));
+        System.out.println("2⁸ = " + Calculatrice.puissance(2, 8));
+        System.out.println("√16 = " + Calculatrice.racineCarree(16));
+        
+        // Géométrie
+        System.out.println("\n--- Géométrie ---");
+        System.out.printf("Aire cercle (r=5) = %.2f%n", Calculatrice.aireCercle(5));
+        System.out.printf("Périmètre cercle (r=5) = %.2f%n", Calculatrice.perimetreCercle(5));
+        System.out.println("Aire rectangle (5×3) = " + Calculatrice.aireRectangle(5, 3));
+        
+        // Fonctions mathématiques
+        System.out.println("\n--- Fonctions mathématiques ---");
+        System.out.println("5! = " + Calculatrice.factorielle(5));
+        System.out.println("10 est pair ? " + Calculatrice.estPair(10));
+        System.out.println("17 est premier ? " + Calculatrice.estPremier(17));
+        System.out.println("PGCD(48, 18) = " + Calculatrice.pgcd(48, 18));
+        System.out.println("PPCM(12, 18) = " + Calculatrice.ppcm(12, 18));
+        
+        // Statistiques
+        System.out.println("\n--- Statistiques ---");
+        System.out.println("Moyenne(5, 10, 15, 20) = " + Calculatrice.moyenne(5, 10, 15, 20));
+        System.out.println("Min(5, 2, 8, 1, 9) = " + Calculatrice.min(5, 2, 8, 1, 9));
+        System.out.println("Max(5, 2, 8, 1, 9) = " + Calculatrice.max(5, 2, 8, 1, 9));
     }
 }
