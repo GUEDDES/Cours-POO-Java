@@ -5,6 +5,8 @@
 [![Java](https://img.shields.io/badge/Java-17+-orange.svg)](https://www.oracle.com/java/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Progression](https://img.shields.io/badge/Progression-100%25-success.svg)](#)
+[![Exemples](https://img.shields.io/badge/Exemples-9-brightgreen.svg)](#)
+[![UML](https://img.shields.io/badge/Diagrammes_UML-3-blueviolet.svg)](#)
 
 ---
 
@@ -19,6 +21,14 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - ✅ Apprendre à modéliser des problèmes réels en objets
 - ✅ Développer des applications Java robustes et maintenables
 - ✅ Pratiquer avec des exercices concrets et progressifs
+
+### 📊 Contenu du Dépôt
+
+- **12 sections complètes** avec théorie détaillée
+- **9+ exemples de code** fonctionnels et commentés
+- **4 exercices** avec solutions
+- **3 diagrammes UML** (PlantUML)
+- **Documentation complète** (README, CONTRIBUTING, LICENSE)
 
 ---
 
@@ -52,7 +62,7 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Types primitifs et variables
 - Chaînes de caractères (String)
 - Tableaux (1D et 2D)
-- **3 exemples de code**
+- **3 exemples de code** : HelloWorld, Calculatrice, GestionTableaux
 
 ---
 
@@ -64,6 +74,7 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Constructeurs et surcharge
 - Le mot-clé `this`
 - Garbage Collector
+- **2 exemples** : Voiture, CompteBancaire
 
 ---
 
@@ -74,6 +85,7 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Constantes (`final`)
 - Blocs d'initialisation statiques
 - Classes utilitaires
+- **Exemple** : Calculatrice (classe utilitaire complète)
 
 ---
 
@@ -83,7 +95,8 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - **Composition** (relation forte)
 - **Agrégation** (relation faible)
 - Cycles de vie des objets
-- **Exemples** : Voiture/Moteur, Université/Étudiant
+- **2 exemples** : VoitureMoteur, UniversiteEtudiant
+- **📊 Diagramme UML** : Composition vs Agrégation
 
 ---
 
@@ -94,6 +107,7 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Import (spécifique, wildcard, nom complet)
 - Conventions de nommage
 - Résolution des conflits
+- **Exemple complet** : Système de bibliothèque multi-packages
 
 ---
 
@@ -104,6 +118,7 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Getters et Setters
 - Validation dans les setters
 - Principe du moindre privilège
+- **Exemple** : Produit E-commerce avec validation
 
 ---
 
@@ -114,7 +129,8 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Constructeurs et `super`
 - Redéfinition de méthodes (`@Override`)
 - Modificateur `final`
-- **Exemples** : Animal/Chien/Chat, Personne/Étudiant/Enseignant
+- **Exemple** : AnimalHierarchie (Chien, Chat, Oiseau)
+- **📊 Diagramme UML** : Hiérarchie Animal
 
 ---
 
@@ -126,6 +142,8 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Interfaces
 - Casting (upcast/downcast)
 - Opérateur `instanceof`
+- **Exemple** : SystemePaiement (CarteBancaire, PayPal, Especes)
+- **📊 Diagramme UML** : Polymorphisme avec classes abstraites et interfaces
 
 ---
 
@@ -136,6 +154,7 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Predicate, Function, Consumer, Supplier, BinaryOperator
 - Streams et opérations (map, filter, reduce)
 - Programmation fonctionnelle en Java
+- **Exemple complet** : Gestion d'étudiants avec Streams
 
 ---
 
@@ -147,6 +166,7 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Déclarer des exceptions (`throws`)
 - Exceptions vérifiées vs non vérifiées
 - Créer des exceptions personnalisées
+- **Exemple** : GestionFichiers avec exceptions personnalisées
 
 ---
 
@@ -156,14 +176,16 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 
 1. **Suivez l'ordre** : Les sections sont progressives
 2. **Lisez le cours** : Chaque section contient un `README.md` détaillé
-3. **Pratiquez** : Faites les exercices AVANT de regarder les solutions
-4. **Expérimentez** : Modifiez le code et observez les résultats
+3. **Étudiez les exemples** : Analysez le code dans le dossier `exemples/`
+4. **Pratiquez** : Faites les exercices AVANT de regarder les solutions
+5. **Expérimentez** : Modifiez le code et observez les résultats
 
 ### 🏃 Pour les développeurs expérimentés
 
 - Utilisez le sommaire pour naviguer directement vers les concepts qui vous intéressent
-- Consultez les exercices pour tester vos connaissances
-- Contribuez en proposant de nouveaux exercices !
+- Consultez les diagrammes UML pour une vue d'ensemble
+- Testez les exercices pour évaluer vos connaissances
+- Contribuez en proposant de nouveaux exemples ou exercices !
 
 ---
 
@@ -202,9 +224,11 @@ XX-Nom-Section/
 ├── exercices/                # Énoncés des exercices
 │   ├── exercice1.md
 │   └── exercice2.md
-└── solutions/                # Solutions commentées
-    ├── Exercice1Solution.java
-    └── Exercice2Solution.java
+├── solutions/                # Solutions commentées
+│   ├── Exercice1Solution.java
+│   └── Exercice2Solution.java
+└── diagrammes/               # Diagrammes UML (optionnel)
+    └── diagramme.puml
 ```
 
 ---
@@ -222,7 +246,7 @@ XX-Nom-Section/
 | 7 | Section 10 | 10h |
 | 8 | Sections 11-12 | 14h |
 
-**Total : ~80 heures** (cours + exercices)
+**Total : ~80 heures** (cours + exercices + pratique)
 
 ---
 
@@ -233,13 +257,16 @@ Les contributions sont les bienvenues ! Vous pouvez :
 - 🐛 Signaler des erreurs
 - 💡 Proposer de nouveaux exercices
 - 📝 Améliorer la documentation
+- 📊 Ajouter des diagrammes UML
 - 🌍 Traduire le cours
+
+**Consultez** : [CONTRIBUTING.md](CONTRIBUTING.md) pour les détails
 
 ---
 
 ## 📜 Licence
 
-Ce projet est sous licence MIT.
+Ce projet est sous licence **MIT**. Voir [LICENSE](LICENSE) pour plus de détails.
 
 ---
 
@@ -248,6 +275,8 @@ Ce projet est sous licence MIT.
 **Abdelweheb GUEDDES**
 - 🌐 GitHub : [@GUEDDES](https://github.com/GUEDDES)
 - 🎓 Contexte : Cours académique - Programmation Orientée Objet
+
+**Voir aussi** : [CONTRIBUTORS.md](CONTRIBUTORS.md) pour la liste complète des contributeurs
 
 ---
 
@@ -258,6 +287,18 @@ Si ce cours vous a été utile :
 - ⭐ **Star** ce dépôt
 - 🔄 **Fork** pour vos propres projets
 - 📢 **Partagez** avec vos collègues étudiants
+- 🤝 **Contribuez** avec de nouveaux exemples
+
+---
+
+## 📊 Statistiques du Projet
+
+- 📚 **12 sections** complètes
+- 💻 **9+ exemples** de code
+- 📊 **3 diagrammes** UML
+- ✅ **4 exercices** avec solutions
+- 📖 **~5000 lignes** de documentation
+- 👥 **1+ contributeur**
 
 ---
 
