@@ -5,310 +5,278 @@
 À la fin de cette section, vous serez capable de :
 - Comprendre la différence entre membres statiques et d'instance
 - Utiliser les attributs et méthodes statiques
-- Définir des constantes avec `static final`
-- Créer des blocs d'initialisation statiques
-- Maîtriser les classes utilitaires
+- Créer des constantes avec `static final`
+- Maîtriser les blocs d'initialisation statiques
+- Concevoir des classes utilitaires
 
 ---
 
-## 1. Principe des Éléments Statiques
+## 1. Membres d'Instance vs Membres Statiques
 
-### 1.1 Membres d'Instance vs Membres Statiques
+### 1.1 Rappel : Membres d'Instance
 
-**Membres d'instance** : Appartiennent à chaque objet individuellement
+**Membres d'instance** = Attachés à **chaque objet**
 
+```java
+class Compteur {
+    int valeur;  // Attribut d'instance
+    
+    void incrementer() {  // Méthode d'instance
+        valeur++;
+    }
+}
+
+// Utilisation
+Compteur c1 = new Compteur();
+Compteur c2 = new Compteur();
+
+c1.valeur = 5;
+c2.valeur = 10;
+
+System.out.println(c1.valeur);  // 5
+System.out.println(c2.valeur);  // 10
+// Chaque objet a sa PROPRE valeur
 ```
-┌─────────────────┐    ┌─────────────────┐
-│   Objet 1       │    │   Objet 2       │
-├─────────────────┤    ├─────────────────┤
-│ nom: "Alice"    │    │ nom: "Bob"      │
-│ age: 25         │    │ age: 30         │
-└─────────────────┘    └─────────────────┘
-     Valeurs              Valeurs
-   différentes          différentes
+
+---
+
+### 1.2 Membres Statiques : Partagés par Tous
+
+**Membres statiques** = Attachés à **la classe** (partagés par tous les objets)
+
+```java
+class Compteur {
+    static int compteurGlobal = 0;  // Attribut STATIQUE
+    int valeur;                      // Attribut d'instance
+    
+    Compteur() {
+        compteurGlobal++;  // Incrémente à chaque création
+        valeur = compteurGlobal;
+    }
+}
+
+// Utilisation
+Compteur c1 = new Compteur();
+Compteur c2 = new Compteur();
+Compteur c3 = new Compteur();
+
+System.out.println(Compteur.compteurGlobal);  // 3
+System.out.println(c1.valeur);                 // 1
+System.out.println(c2.valeur);                 // 2
+System.out.println(c3.valeur);                 // 3
 ```
 
-**Membres statiques** : Appartiennent à la classe, partagés par tous les objets
-
+**Schéma mémoire** :
 ```
-     ┌──────────────────────────┐
-     │   CLASSE Compteur        │
-     │  ┌────────────────────┐  │
-     │  │ compteur (static)  │  │ ← Partagé par tous
-     │  │      = 5           │  │
-     │  └────────────────────┘  │
-     └──────────────────────────┘
-              ↑        ↑
-              │        │
-    ┌─────────┴───┐   │
-    │ Objet 1     │   │
-    └─────────────┘   │
-                      │
-            ┌─────────┴───┐
-            │ Objet 2     │
-            └─────────────┘
+┌──────────────────────────────┐
+│   CLASSE Compteur            │
+│   compteurGlobal = 3  ←──────┼─── PARTAGÉ (1 seule copie)
+└──────────────────────────────┘
+
+┌──────────┐  ┌──────────┐  ┌──────────┐
+│ c1       │  │ c2       │  │ c3       │
+│ valeur=1 │  │ valeur=2 │  │ valeur=3 │  ← PROPRE à chaque objet
+└──────────┘  └──────────┘  └──────────┘
 ```
 
 ---
 
 ## 2. Attributs Statiques
 
-### 2.1 Déclaration
-
-```java
-class Compteur {
-    static int total = 0;  // Attribut statique
-    int valeur;            // Attribut d'instance
-    
-    Compteur() {
-        total++;           // Incrémente le compteur partagé
-        valeur = total;    // Stocke la valeur actuelle
-    }
-    
-    void afficher() {
-        System.out.println("Je suis le compteur n°" + valeur);
-        System.out.println("Total de compteurs : " + total);
-    }
-}
-```
-
----
-
-### 2.2 Utilisation
-
-```java
-public class TestCompteur {
-    public static void main(String[] args) {
-        System.out.println("Total initial : " + Compteur.total);  // 0
-        
-        Compteur c1 = new Compteur();
-        c1.afficher();
-        // Je suis le compteur n°1
-        // Total de compteurs : 1
-        
-        Compteur c2 = new Compteur();
-        c2.afficher();
-        // Je suis le compteur n°2
-        // Total de compteurs : 2
-        
-        Compteur c3 = new Compteur();
-        
-        // ✅ Accès via la classe (recommandé)
-        System.out.println("Total : " + Compteur.total);  // 3
-        
-        // ⚠️ Accès via une instance (possible mais déconseillé)
-        System.out.println("Total : " + c1.total);  // 3 (même valeur)
-    }
-}
-```
-
----
-
-### 2.3 Exemple Pratique : Compteur d'Utilisateurs
-
-```java
-class Utilisateur {
-    static int nombreUtilisateurs = 0;  // Compteur partagé
-    
-    String nom;
-    int id;
-    
-    Utilisateur(String nom) {
-        nombreUtilisateurs++;
-        this.id = nombreUtilisateurs;
-        this.nom = nom;
-    }
-    
-    static int getNombreUtilisateurs() {
-        return nombreUtilisateurs;
-    }
-    
-    void afficher() {
-        System.out.println("Utilisateur #" + id + " : " + nom);
-    }
-}
-```
-
-**Test** :
-```java
-Utilisateur u1 = new Utilisateur("Alice");
-Utilisateur u2 = new Utilisateur("Bob");
-Utilisateur u3 = new Utilisateur("Charlie");
-
-u1.afficher();  // Utilisateur #1 : Alice
-u2.afficher();  // Utilisateur #2 : Bob
-u3.afficher();  // Utilisateur #3 : Charlie
-
-System.out.println("Total : " + Utilisateur.getNombreUtilisateurs());  // 3
-```
-
----
-
-## 3. Constantes : `static final`
-
-### 3.1 Déclarer des Constantes
+### 2.1 Déclaration et Accès
 
 ```java
 class Configuration {
-    // Constantes : static final
-    public static final double PI = 3.141592653589793;
-    public static final int MAX_CONNEXIONS = 100;
-    public static final String VERSION = "1.0.0";
-    public static final double TAUX_TVA = 0.20;
+    static String nomApp = "MonAppli";
+    static String version = "1.0.0";
+    static int maxUtilisateurs = 100;
 }
-```
 
-**Convention** : Constantes en MAJUSCULES avec `_`
+// Accès via le nom de la classe (RECOMMANDÉ)
+System.out.println(Configuration.nomApp);         // "MonAppli"
+System.out.println(Configuration.maxUtilisateurs); // 100
+
+// Accès via une instance (DÉCONSEILLÉ mais possible)
+Configuration config = new Configuration();
+System.out.println(config.nomApp);  // Fonctionne mais mauvaise pratique
+```
 
 ---
 
-### 3.2 Utilisation
+### 2.2 Exemple Pratique : Compteur d'Instances
 
 ```java
-public class TestConfig {
-    public static void main(String[] args) {
-        double rayon = 5.0;
-        double aire = Configuration.PI * rayon * rayon;
-        System.out.println("Aire : " + aire);
-        
-        double prixHT = 100.0;
-        double prixTTC = prixHT * (1 + Configuration.TAUX_TVA);
-        System.out.println("Prix TTC : " + prixTTC + "€");
-        
-        // ❌ ERREUR : impossible de modifier une constante
-        // Configuration.PI = 3.14;  // Erreur de compilation
+class Livre {
+    static int nombreLivres = 0;  // Compteur partagé
+    
+    String titre;
+    String auteur;
+    
+    Livre(String titre, String auteur) {
+        this.titre = titre;
+        this.auteur = auteur;
+        nombreLivres++;  // Incrémente à chaque création
+    }
+    
+    static int getNombreLivres() {
+        return nombreLivres;
     }
 }
+
+// Utilisation
+System.out.println(Livre.getNombreLivres());  // 0
+
+Livre l1 = new Livre("1984", "Orwell");
+Livre l2 = new Livre("Le Seigneur des Anneaux", "Tolkien");
+
+System.out.println(Livre.getNombreLivres());  // 2
 ```
 
 ---
 
-### 3.3 Exemple : Classe Math Personnalisée
+## 3. Méthodes Statiques
+
+### 3.1 Syntaxe et Utilisation
 
 ```java
 class MathUtils {
-    // Constantes mathématiques
-    public static final double E = 2.718281828459045;
-    public static final double PHI = 1.618033988749895;  // Nombre d'or
+    // Méthode statique : calcul du carré
+    static int carre(int n) {
+        return n * n;
+    }
     
-    // Constantes de conversion
-    public static final double KM_VERS_MILES = 0.621371;
-    public static final double KG_VERS_POUNDS = 2.20462;
-    
-    // Méthodes statiques (voir section suivante)
-    public static double convertirKmEnMiles(double km) {
-        return km * KM_VERS_MILES;
+    // Méthode statique : calcul de la factorielle
+    static long factorielle(int n) {
+        if (n <= 1) return 1;
+        return n * factorielle(n - 1);
     }
 }
+
+// Utilisation SANS créer d'objet
+System.out.println(MathUtils.carre(5));        // 25
+System.out.println(MathUtils.factorielle(5));  // 120
 ```
 
 ---
 
-## 4. Méthodes Statiques
-
-### 4.1 Déclaration et Utilisation
-
-```java
-class Calculatrice {
-    // Méthode statique
-    static int additionner(int a, int b) {
-        return a + b;
-    }
-    
-    static double pourcentage(double valeur, double taux) {
-        return valeur * taux / 100;
-    }
-    
-    static int maximum(int a, int b) {
-        return (a > b) ? a : b;
-    }
-}
-```
-
-**Utilisation** :
-```java
-// Appel SANS créer d'objet
-int somme = Calculatrice.additionner(5, 3);  // 8
-
-double remise = Calculatrice.pourcentage(100, 15);  // 15.0
-
-int max = Calculatrice.maximum(10, 25);  // 25
-```
-
----
-
-### 4.2 Restrictions des Méthodes Statiques
+### 3.2 Restrictions des Méthodes Statiques
 
 ❌ **Une méthode statique NE PEUT PAS** :
-- Accéder directement à des attributs d'instance
-- Appeler des méthodes d'instance
-- Utiliser `this`
+1. Accéder aux attributs d'instance
+2. Appeler des méthodes d'instance
+3. Utiliser `this`
 
 ```java
 class Exemple {
-    int valeur = 10;              // Attribut d'instance
-    static int compteur = 0;      // Attribut statique
-    
-    void methodeInstance() {
-        System.out.println("Instance");
-    }
+    int attributInstance = 10;       // Attribut d'instance
+    static int attributStatique = 20; // Attribut statique
     
     static void methodeStatique() {
-        // ❌ ERREUR : accès à un attribut d'instance
-        // System.out.println(valeur);
+        // ✅ OK : Accès à un attribut statique
+        System.out.println(attributStatique);
         
-        // ❌ ERREUR : appel d'une méthode d'instance
-        // methodeInstance();
+        // ❌ ERREUR : Ne peut pas accéder à un attribut d'instance
+        // System.out.println(attributInstance);
         
-        // ❌ ERREUR : utilisation de this
-        // this.compteur = 5;
-        
-        // ✅ OK : accès à un attribut statique
-        compteur = 5;
-        System.out.println(compteur);
+        // ❌ ERREUR : Ne peut pas utiliser this
+        // System.out.println(this.attributInstance);
+    }
+    
+    void methodeInstance() {
+        // ✅ OK : Une méthode d'instance peut accéder à TOUT
+        System.out.println(attributInstance);
+        System.out.println(attributStatique);
     }
 }
 ```
 
 ---
 
-### 4.3 Exemple : Classe Utilitaire StringUtils
+### 3.3 Exemple : Classe Utilitaire
 
 ```java
 class StringUtils {
     // Méthode statique : inverser une chaîne
     static String inverser(String texte) {
-        StringBuilder sb = new StringBuilder(texte);
-        return sb.reverse().toString();
+        if (texte == null) return null;
+        return new StringBuilder(texte).reverse().toString();
     }
     
     // Méthode statique : compter les voyelles
     static int compterVoyelles(String texte) {
-        int count = 0;
+        if (texte == null) return 0;
+        int compteur = 0;
         String voyelles = "aeiouAEIOU";
-        for (int i = 0; i < texte.length(); i++) {
-            if (voyelles.indexOf(texte.charAt(i)) != -1) {
-                count++;
+        for (char c : texte.toCharArray()) {
+            if (voyelles.indexOf(c) != -1) {
+                compteur++;
             }
         }
-        return count;
+        return compteur;
     }
+}
+
+// Utilisation
+System.out.println(StringUtils.inverser("Java"));         // "avaJ"
+System.out.println(StringUtils.compterVoyelles("Hello")); // 2
+```
+
+---
+
+## 4. Constantes : `static final`
+
+### 4.1 Déclarer une Constante
+
+```java
+class Constantes {
+    // Constantes mathématiques
+    public static final double PI = 3.141592653589793;
+    public static final double E = 2.718281828459045;
     
-    // Méthode statique : capitaliser
-    static String capitaliser(String texte) {
-        if (texte == null || texte.isEmpty()) {
-            return texte;
-        }
-        return texte.substring(0, 1).toUpperCase() + texte.substring(1).toLowerCase();
-    }
+    // Constantes de configuration
+    public static final int MAX_TENTATIVES = 3;
+    public static final String VERSION = "2.0.1";
+    
+    // Constantes de codes HTTP
+    public static final int HTTP_OK = 200;
+    public static final int HTTP_NOT_FOUND = 404;
+    public static final int HTTP_ERROR = 500;
+}
+
+// Utilisation
+double surface = Constantes.PI * rayon * rayon;
+
+if (codeReponse == Constantes.HTTP_OK) {
+    System.out.println("Succès");
 }
 ```
 
-**Test** :
+**Convention** : Les constantes s'écrivent en **MAJUSCULES** avec `_` entre les mots.
+
+---
+
+### 4.2 Différence `final` vs `static final`
+
 ```java
-System.out.println(StringUtils.inverser("Java"));        // avaJ
-System.out.println(StringUtils.compterVoyelles("Hello")); // 2
-System.out.println(StringUtils.capitaliser("jAvA"));      // Java
+class Exemple {
+    // Constante d'instance (RARE)
+    final int ID;
+    
+    // Constante de classe (COURANT)
+    static final int MAX = 100;
+    
+    Exemple(int id) {
+        this.ID = id;  // Peut être initialisée dans le constructeur
+        // this.MAX = 200; // ❌ ERREUR : static final ne peut pas être modifié
+    }
+}
+
+// Chaque objet a son propre ID final
+Exemple e1 = new Exemple(1);
+Exemple e2 = new Exemple(2);
+
+// MAX est partagé
+System.out.println(Exemple.MAX);  // 100
 ```
 
 ---
@@ -317,37 +285,31 @@ System.out.println(StringUtils.capitaliser("jAvA"));      // Java
 
 ### 5.1 Syntaxe
 
+Un **bloc statique** s'exécute **une seule fois** lors du **chargement de la classe**.
+
 ```java
 class Configuration {
-    static String databaseUrl;
-    static int maxConnections;
+    static String cheminFichier;
+    static int timeout;
     
     // Bloc d'initialisation statique
     static {
         System.out.println("Initialisation de la configuration...");
-        databaseUrl = "jdbc:mysql://localhost:3306/mydb";
-        maxConnections = 50;
+        cheminFichier = "/etc/config.properties";
+        timeout = 30;
     }
     
-    static void afficherConfig() {
-        System.out.println("URL : " + databaseUrl);
-        System.out.println("Max connexions : " + maxConnections);
+    static void afficher() {
+        System.out.println("Fichier : " + cheminFichier);
+        System.out.println("Timeout : " + timeout + "s");
     }
 }
-```
 
-**Utilisation** :
-```java
-public class Test {
-    public static void main(String[] args) {
-        // Le bloc statique s'exécute AU PREMIER accès à la classe
-        Configuration.afficherConfig();
-        // Sortie :
-        // Initialisation de la configuration...
-        // URL : jdbc:mysql://localhost:3306/mydb
-        // Max connexions : 50
-    }
-}
+// Utilisation
+Configuration.afficher();
+// Affiche d'abord : "Initialisation de la configuration..."
+// Puis : "Fichier : /etc/config.properties"
+//        "Timeout : 30s"
 ```
 
 ---
@@ -356,155 +318,168 @@ public class Test {
 
 ```java
 class Test {
-    static int a = initialiserA();
+    static int x = 10;  // ① Initialisation directe
     
-    static {
-        System.out.println("Bloc statique 1");
+    static {            // ② Bloc statique 1
+        System.out.println("Bloc 1 : x = " + x);
+        x = 20;
     }
     
-    static int b = initialiserB();
-    
-    static {
-        System.out.println("Bloc statique 2");
+    static {            // ③ Bloc statique 2
+        System.out.println("Bloc 2 : x = " + x);
+        x = 30;
     }
     
-    static int initialiserA() {
-        System.out.println("Initialisation de a");
-        return 10;
-    }
-    
-    static int initialiserB() {
-        System.out.println("Initialisation de b");
-        return 20;
-    }
-    
-    public static void main(String[] args) {
-        System.out.println("main()");
+    static void afficher() {
+        System.out.println("Méthode : x = " + x);
     }
 }
+
+// Première utilisation de la classe
+Test.afficher();
 ```
 
 **Sortie** :
 ```
-Initialisation de a
-Bloc statique 1
-Initialisation de b
-Bloc statique 2
-main()
+Bloc 1 : x = 10
+Bloc 2 : x = 20
+Méthode : x = 30
 ```
-
-**Ordre** : De haut en bas dans l'ordre de déclaration
 
 ---
 
-## 6. Classe avec Uniquement des Membres Statiques
+## 6. Classes Utilitaires
 
-### 6.1 Classe Utilitaire
+### 6.1 Qu'est-ce qu'une Classe Utilitaire ?
 
-Une **classe utilitaire** contient uniquement des méthodes statiques.
+Une classe qui contient **uniquement des méthodes statiques** et **ne doit pas être instanciée**.
+
+**Exemples dans Java** :
+- `Math` : `Math.sqrt()`, `Math.pow()`, etc.
+- `Arrays` : `Arrays.sort()`, `Arrays.toString()`, etc.
+- `Collections` : `Collections.sort()`, etc.
+
+---
+
+### 6.2 Créer une Classe Utilitaire
 
 ```java
-class MathUtils {
-    // Constructeur privé : empêche l'instanciation
-    private MathUtils() {
-        throw new AssertionError("Cette classe ne doit pas être instanciée");
+class CalculUtils {
+    // ❌ Empêcher l'instanciation
+    private CalculUtils() {
+        throw new AssertionError("Classe utilitaire : ne pas instancier");
     }
     
-    // Constantes
-    public static final double PI = 3.141592653589793;
-    public static final double E = 2.718281828459045;
-    
-    // Méthodes utilitaires
-    public static double carre(double x) {
-        return x * x;
-    }
-    
-    public static double cube(double x) {
-        return x * x * x;
-    }
-    
-    public static int factorielle(int n) {
-        if (n <= 1) return 1;
-        return n * factorielle(n - 1);
-    }
-    
+    // Méthodes statiques utilitaires
     public static boolean estPair(int n) {
         return n % 2 == 0;
     }
+    
+    public static boolean estPremier(int n) {
+        if (n < 2) return false;
+        for (int i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i == 0) return false;
+        }
+        return true;
+    }
+    
+    public static int pgcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
 }
+
+// Utilisation
+System.out.println(CalculUtils.estPair(10));      // true
+System.out.println(CalculUtils.estPremier(17));   // true
+System.out.println(CalculUtils.pgcd(48, 18));     // 6
+
+// ❌ ERREUR : constructeur privé
+// CalculUtils util = new CalculUtils();
 ```
 
 ---
 
-### 6.2 Exemple Complet : Classe DateUtils
+## 7. Exemple Complet : Gestion de Comptes Bancaires
 
 ```java
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
-class DateUtils {
-    private DateUtils() {}  // Empêche l'instanciation
+class CompteBancaire {
+    // Attributs statiques
+    private static int compteurComptes = 0;
+    private static final double TAUX_INTERET = 0.03;  // 3%
+    private static final double FRAIS_GESTION = 5.0;  // 5€
     
-    // Formats de date constants
-    public static final DateTimeFormatter FORMAT_FR = 
-        DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    public static final DateTimeFormatter FORMAT_US = 
-        DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    // Attributs d'instance
+    private int numero;
+    private String titulaire;
+    private double solde;
     
-    // Méthode : formater une date
-    public static String formaterDate(LocalDate date, DateTimeFormatter format) {
-        return date.format(format);
+    // Bloc statique
+    static {
+        System.out.println("Système bancaire initialisé");
+        System.out.println("Taux d'intérêt : " + (TAUX_INTERET * 100) + "%");
     }
     
-    // Méthode : obtenir la date du jour formatée
-    public static String aujourdhuiFR() {
-        return LocalDate.now().format(FORMAT_FR);
+    // Constructeur
+    public CompteBancaire(String titulaire, double soldeInitial) {
+        this.numero = ++compteurComptes;
+        this.titulaire = titulaire;
+        this.solde = soldeInitial;
     }
     
-    // Méthode : calculer l'âge
-    public static int calculerAge(LocalDate dateNaissance) {
-        return LocalDate.now().getYear() - dateNaissance.getYear();
+    // Méthode statique : nombre total de comptes
+    public static int getNombreComptes() {
+        return compteurComptes;
+    }
+    
+    // Méthode statique : appliquer frais à tous
+    public static void appliquerFraisGestion(CompteBancaire[] comptes) {
+        for (CompteBancaire compte : comptes) {
+            compte.solde -= FRAIS_GESTION;
+        }
+        System.out.println("Frais de " + FRAIS_GESTION + "€ appliqués");
+    }
+    
+    // Méthode d'instance : appliquer intérêts
+    public void appliquerInterets() {
+        solde += solde * TAUX_INTERET;
+    }
+    
+    // Méthode d'instance : afficher
+    public void afficher() {
+        System.out.printf("Compte %d - %s : %.2f€%n", numero, titulaire, solde);
     }
 }
-```
 
-**Test** :
-```java
-System.out.println("Aujourd'hui : " + DateUtils.aujourdhuiFR());
-
-LocalDate naissance = LocalDate.of(1990, 5, 15);
-int age = DateUtils.calculerAge(naissance);
-System.out.println("Âge : " + age + " ans");
-```
-
----
-
-## 7. Méthode main() : Point d'Entrée
-
-La méthode `main()` est **statique** car elle doit être appelée SANS créer d'objet.
-
-```java
-public class MonProgramme {
-    // Point d'entrée du programme
+// Utilisation
+public class TestBanque {
     public static void main(String[] args) {
-        System.out.println("Démarrage du programme");
+        CompteBancaire c1 = new CompteBancaire("Alice", 1000);
+        CompteBancaire c2 = new CompteBancaire("Bob", 2000);
+        CompteBancaire c3 = new CompteBancaire("Charlie", 1500);
         
-        // Accès à des méthodes statiques
-        afficherBienvenue();
+        System.out.println("Nombre de comptes : " + CompteBancaire.getNombreComptes());
         
-        // Création d'objets
-        MonProgramme programme = new MonProgramme();
-        programme.executer();
-    }
-    
-    // Méthode statique (peut être appelée depuis main)
-    static void afficherBienvenue() {
-        System.out.println("Bienvenue !");
-    }
-    
-    // Méthode d'instance
-    void executer() {
-        System.out.println("Exécution en cours...");
+        c1.afficher();
+        c2.afficher();
+        c3.afficher();
+        
+        // Appliquer intérêts individuellement
+        c1.appliquerInterets();
+        System.out.println("Après intérêts :");
+        c1.afficher();
+        
+        // Appliquer frais à tous
+        CompteBancaire[] comptes = {c1, c2, c3};
+        CompteBancaire.appliquerFraisGestion(comptes);
+        
+        c1.afficher();
+        c2.afficher();
+        c3.afficher();
     }
 }
 ```
@@ -513,23 +488,23 @@ public class MonProgramme {
 
 ## 📝 Résumé de la Section
 
-| Concept | Définition | Accès |
-|---------|------------|-------|
-| **Attribut statique** | Partagé par tous les objets | `Classe.attribut` |
-| **Méthode statique** | Fonction sans instance | `Classe.methode()` |
-| **Constante** | `static final` | `Classe.CONSTANTE` |
-| **Bloc statique** | Initialisation au chargement | Exécution automatique |
-| **Classe utilitaire** | Uniquement membres statiques | Constructeur privé |
+| Concept | Description |
+|---------|-------------|
+| **Attribut statique** | Partagé par toutes les instances (1 seule copie en mémoire) |
+| **Méthode statique** | Appelée sur la classe, pas sur un objet |
+| **`static final`** | Constante de classe (partagée et immuable) |
+| **Bloc statique** | Code exécuté une fois au chargement de la classe |
+| **Classe utilitaire** | Contient uniquement des méthodes statiques, constructeur privé |
 
 ---
 
 ## 🎯 Points à Retenir
 
-1. Les membres **statiques** appartiennent à la **classe**, pas aux objets
-2. Accès recommandé : `NomClasse.membre` (pas via instance)
-3. Constantes : `public static final` en MAJUSCULES
-4. Méthodes statiques : **pas d'accès** aux membres d'instance
-5. Classe utilitaire : constructeur **privé** + membres **statiques**
+1. **Statique** = attaché à la **classe**, pas aux objets
+2. Accès via **`NomClasse.membre`** (recommandé)
+3. Méthodes statiques **ne peuvent pas** utiliser `this` ni accéder aux membres d'instance
+4. **Constantes** = `public static final TYPE NOM`
+5. **Blocs statiques** s'exécutent au chargement de la classe
 
 ---
 

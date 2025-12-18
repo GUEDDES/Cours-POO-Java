@@ -4,571 +4,536 @@
 
 À la fin de cette section, vous serez capable de :
 - Distinguer composition et agrégation
-- Implémenter une relation de composition
-- Implémenter une relation d'agrégation
-- Choisir le bon type de relation selon le contexte
+- Implémenter une relation de composition en Java
+- Implémenter une relation d'agrégation en Java
+- Comprendre les cycles de vie des objets
 - Modéliser des systèmes complexes
 
 ---
 
 ## 1. Introduction aux Relations
 
-### 1.1 Pourquoi les Relations ?
+### 1.1 Types de Relations
 
-Dans un système réel, les objets **ne vivent pas isolés**. Ils collaborent et interagissent.
-
-**Exemples** :
-- Une voiture **contient** un moteur
-- Une université **a des** étudiants
-- Un ordinateur **est composé de** processeur, RAM, disque dur
-- Une équipe **comprend des** joueurs
-
----
-
-### 1.2 Types de Relations
+En POO, les objets **collaborent** entre eux. Il existe plusieurs types de relations :
 
 ```
 ┌─────────────────────────────────────────────┐
 │         RELATIONS ENTRE CLASSES             │
 ├─────────────────────────────────────────────┤
 │                                             │
-│  1. COMPOSITION (relation FORTE)            │
-│     "contient" - cycle de vie dépendant     │
-│     Symbole UML : ◆────────>                │
+│  1. COMPOSITION     (contient, forte)       │
+│     Symbole UML : ◆─────                   │
 │                                             │
-│  2. AGRÉGATION (relation FAIBLE)            │
-│     "a un" - cycle de vie indépendant       │
-│     Symbole UML : ◇────────>                │
+│  2. AGRÉGATION      (a-un, faible)          │
+│     Symbole UML : ◇─────                   │
+│                                             │
+│  3. HÉRITAGE        (est-un)                │
+│     Symbole UML : ──▷                       │
+│                                             │
+│  4. ASSOCIATION     (utilise)               │
+│     Symbole UML : ──────                    │
 │                                             │
 └─────────────────────────────────────────────┘
 ```
 
+Cette section se concentre sur **Composition** et **Agrégation**.
+
 ---
 
-## 2. Composition : Relation Forte
+## 2. Composition : Relation "Contient" Forte
 
 ### 2.1 Définition
 
-**Composition** = Relation "**contient**" où la partie **ne peut pas exister** sans le conteneur.
+**Composition** = Relation de **possession exclusive**
 
 **Caractéristiques** :
-- ✅ Les parties sont **créées PAR** le conteneur
-- ✅ Les parties sont **détruites AVEC** le conteneur
-- ✅ Cycle de vie **dépendant**
-- ✅ Possession **exclusive**
+- Les **parties** sont créées **par** le conteneur
+- Les parties **meurent avec** le conteneur
+- Les parties **ne peuvent pas exister** sans le conteneur
+- Cycle de vie **dépendant**
 
----
-
-### 2.2 Exemple : Voiture et Moteur
-
-**Analyse** :
-- Un moteur est **créé avec** la voiture
-- Si la voiture est détruite, le moteur **n'existe plus**
-- Un moteur **appartient à UNE seule** voiture
-
+**Exemples du monde réel** :
 ```
-Voiture ◆────────> Moteur
-         contient
+Voiture ◆──── Moteur
+Maison  ◆──── Pièce
+Corps   ◆──── Cœur
+Ordinateur ◆──── Processeur
 ```
 
 ---
 
-### 2.3 Implémentation Java
+### 2.2 Implémentation en Java
 
-#### Classe Moteur
+#### Exemple 1 : Voiture et Moteur
 
 ```java
 class Moteur {
-    private int puissance;      // En chevaux
-    private String type;        // Essence, Diesel, Électrique
+    private int puissance;  // en chevaux
+    private String type;    // "Essence" ou "Diesel"
     
-    Moteur(int puissance, String type) {
+    public Moteur(int puissance, String type) {
         this.puissance = puissance;
         this.type = type;
     }
     
-    void demarrer() {
-        System.out.println("Moteur " + type + " de " + puissance + "ch démarre");
+    public void demarrer() {
+        System.out.println("Moteur " + type + " de " + puissance + "CV démarré");
     }
     
-    void afficher() {
-        System.out.println("Moteur : " + type + " - " + puissance + "ch");
+    public void arreter() {
+        System.out.println("Moteur arrêté");
     }
 }
-```
 
----
-
-#### Classe Voiture (Composition)
-
-```java
 class Voiture {
     private String marque;
     private String modele;
-    private Moteur moteur;  // Composition
+    private Moteur moteur;  // COMPOSITION
     
-    // Le moteur est créé DANS le constructeur
-    Voiture(String marque, String modele, int puissanceMoteur, String typeMoteur) {
+    // ✅ Le moteur est créé À L'INTÉRIEUR du constructeur
+    public Voiture(String marque, String modele, int puissance, String typeMoteur) {
         this.marque = marque;
         this.modele = modele;
-        this.moteur = new Moteur(puissanceMoteur, typeMoteur);  // ⚡ Création interne
+        this.moteur = new Moteur(puissance, typeMoteur);  // Création interne
     }
     
-    void demarrer() {
+    public void demarrer() {
         System.out.println("Démarrage de " + marque + " " + modele);
         moteur.demarrer();
     }
     
-    void afficherInfos() {
-        System.out.println("Voiture : " + marque + " " + modele);
-        moteur.afficher();
+    public void arreter() {
+        moteur.arreter();
+        System.out.println(marque + " " + modele + " arrêtée");
     }
 }
-```
 
----
-
-#### Test
-
-```java
+// Utilisation
 public class TestComposition {
     public static void main(String[] args) {
-        // Création d'une voiture (le moteur est créé automatiquement)
-        Voiture maVoiture = new Voiture("Tesla", "Model 3", 450, "Électrique");
-        
-        maVoiture.afficherInfos();
-        // Voiture : Tesla Model 3
-        // Moteur : Électrique - 450ch
-        
+        Voiture maVoiture = new Voiture("Peugeot", "308", 130, "Essence");
         maVoiture.demarrer();
-        // Démarrage de Tesla Model 3
-        // Moteur Électrique de 450ch démarre
+        maVoiture.arreter();
         
-        // Quand maVoiture sera détruite (GC), son moteur le sera aussi
-        maVoiture = null;  // Le moteur n'est plus accessible
-    }
-}
-```
-
----
-
-### 2.4 Exemple 2 : Ordinateur et Composants
-
-```java
-class Processeur {
-    private String modele;
-    private int frequence;  // En GHz
-    
-    Processeur(String modele, int frequence) {
-        this.modele = modele;
-        this.frequence = frequence;
-    }
-    
-    void afficher() {
-        System.out.println("CPU : " + modele + " @ " + frequence + "GHz");
-    }
-}
-
-class RAM {
-    private int capacite;  // En Go
-    
-    RAM(int capacite) {
-        this.capacite = capacite;
-    }
-    
-    void afficher() {
-        System.out.println("RAM : " + capacite + "Go");
-    }
-}
-
-class Ordinateur {
-    private String marque;
-    private Processeur cpu;  // Composition
-    private RAM ram;         // Composition
-    
-    Ordinateur(String marque, String modeleCPU, int freqCPU, int capaciteRAM) {
-        this.marque = marque;
-        this.cpu = new Processeur(modeleCPU, freqCPU);  // Création interne
-        this.ram = new RAM(capaciteRAM);                 // Création interne
-    }
-    
-    void afficherConfig() {
-        System.out.println("=== " + marque + " ===");
-        cpu.afficher();
-        ram.afficher();
-    }
-}
-```
-
-**Test** :
-```java
-Ordinateur pc = new Ordinateur("Dell", "Intel i7", 3, 16);
-pc.afficherConfig();
-// === Dell ===
-// CPU : Intel i7 @ 3GHz
-// RAM : 16Go
-```
-
----
-
-## 3. Agrégation : Relation Faible
-
-### 3.1 Définition
-
-**Agrégation** = Relation "**a un**" où les parties peuvent **exister indépendamment** du conteneur.
-
-**Caractéristiques** :
-- ✅ Les parties **existent AVANT** le conteneur
-- ✅ Les parties **survivent APRÈS** la destruction du conteneur
-- ✅ Cycle de vie **indépendant**
-- ✅ Les parties peuvent être **partagées**
-
----
-
-### 3.2 Exemple : Université et Étudiants
-
-**Analyse** :
-- Les étudiants **existent avant** de rejoindre l'université
-- Si l'université ferme, les étudiants **continuent d'exister**
-- Un étudiant peut changer d'université
-
-```
-Université ◇────────> Étudiant
-            a des
-```
-
----
-
-### 3.3 Implémentation Java
-
-#### Classe Étudiant
-
-```java
-class Etudiant {
-    private String nom;
-    private String matricule;
-    private int age;
-    
-    Etudiant(String nom, String matricule, int age) {
-        this.nom = nom;
-        this.matricule = matricule;
-        this.age = age;
-    }
-    
-    String getNom() {
-        return nom;
-    }
-    
-    String getMatricule() {
-        return matricule;
-    }
-    
-    void afficher() {
-        System.out.println("Étudiant : " + nom + " (" + matricule + "), " + age + " ans");
-    }
-}
-```
-
----
-
-#### Classe Université (Agrégation)
-
-```java
-import java.util.ArrayList;
-import java.util.List;
-
-class Universite {
-    private String nom;
-    private List<Etudiant> etudiants;  // Agrégation
-    
-    Universite(String nom) {
-        this.nom = nom;
-        this.etudiants = new ArrayList<>();
-    }
-    
-    // L'étudiant est PASSÉ en paramètre (créé à l'extérieur)
-    void inscrire(Etudiant etudiant) {
-        etudiants.add(etudiant);
-        System.out.println(etudiant.getNom() + " inscrit à " + nom);
-    }
-    
-    void desinscrire(Etudiant etudiant) {
-        if (etudiants.remove(etudiant)) {
-            System.out.println(etudiant.getNom() + " désinscrit de " + nom);
-        }
-    }
-    
-    void afficherEtudiants() {
-        System.out.println("\n=== " + nom + " ===");
-        System.out.println("Nombre d'étudiants : " + etudiants.size());
-        for (Etudiant e : etudiants) {
-            e.afficher();
-        }
-    }
-}
-```
-
----
-
-#### Test
-
-```java
-public class TestAgregation {
-    public static void main(String[] args) {
-        // 1. Créer des étudiants (existent indépendamment)
-        Etudiant alice = new Etudiant("Alice Dupont", "E12345", 20);
-        Etudiant bob = new Etudiant("Bob Martin", "E12346", 22);
-        Etudiant charlie = new Etudiant("Charlie Durand", "E12347", 21);
-        
-        // 2. Créer une université
-        Universite isitcom = new Universite("ISITCom");
-        
-        // 3. Inscrire les étudiants
-        isitcom.inscrire(alice);
-        isitcom.inscrire(bob);
-        isitcom.inscrire(charlie);
-        
-        // 4. Afficher
-        isitcom.afficherEtudiants();
-        
-        // 5. Désinscrire un étudiant
-        isitcom.desinscrire(bob);
-        
-        // 6. Bob existe toujours !
-        System.out.println("\nBob après désinscription :");
-        bob.afficher();
-        
-        // 7. Bob peut s'inscrire ailleurs
-        Universite autre = new Universite("Université de Sousse");
-        autre.inscrire(bob);
+        // ❌ Impossible d'accéder au moteur de l'extérieur
+        // Le moteur n'existe QUE dans la voiture
     }
 }
 ```
 
 **Sortie** :
 ```
-Alice Dupont inscrit à ISITCom
-Bob Martin inscrit à ISITCom
-Charlie Durand inscrit à ISITCom
-
-=== ISITCom ===
-Nombre d'étudiants : 3
-Étudiant : Alice Dupont (E12345), 20 ans
-Étudiant : Bob Martin (E12346), 22 ans
-Étudiant : Charlie Durand (E12347), 21 ans
-Bob Martin désinscrit de ISITCom
-
-Bob après désinscription :
-Étudiant : Bob Martin (E12346), 22 ans
-Bob Martin inscrit à Université de Sousse
+Démarrage de Peugeot 308
+Moteur Essence de 130CV démarré
+Moteur arrêté
+Peugeot 308 arrêtée
 ```
 
 ---
 
-### 3.4 Exemple 2 : Équipe de Football
+#### Exemple 2 : Maison et Pièces
 
 ```java
-import java.util.ArrayList;
-import java.util.List;
-
-class Joueur {
+class Piece {
     private String nom;
-    private int numero;
-    private String poste;
+    private double surface;  // en m²
     
-    Joueur(String nom, int numero, String poste) {
+    public Piece(String nom, double surface) {
         this.nom = nom;
-        this.numero = numero;
-        this.poste = poste;
+        this.surface = surface;
     }
     
-    String getNom() {
-        return nom;
-    }
-    
-    void afficher() {
-        System.out.println("#" + numero + " " + nom + " (" + poste + ")");
+    public void afficher() {
+        System.out.println(nom + " : " + surface + "m²");
     }
 }
 
-class Equipe {
-    private String nom;
-    private List<Joueur> joueurs;
+class Maison {
+    private String adresse;
+    private Piece[] pieces;
     
-    Equipe(String nom) {
-        this.nom = nom;
-        this.joueurs = new ArrayList<>();
+    public Maison(String adresse, int nombrePieces) {
+        this.adresse = adresse;
+        this.pieces = new Piece[nombrePieces];
     }
     
-    void recruter(Joueur joueur) {
-        joueurs.add(joueur);
-        System.out.println(joueur.getNom() + " rejoint " + nom);
+    // Méthode pour ajouter une pièce
+    public void ajouterPiece(int index, String nom, double surface) {
+        pieces[index] = new Piece(nom, surface);  // Création interne
     }
     
-    void licencier(Joueur joueur) {
-        if (joueurs.remove(joueur)) {
-            System.out.println(joueur.getNom() + " quitte " + nom);
-        }
-    }
-    
-    void afficherEquipe() {
-        System.out.println("\n" + nom + " - Effectif :");
-        for (Joueur j : joueurs) {
-            j.afficher();
-        }
-    }
-}
-```
-
----
-
-## 4. Composition vs Agrégation : Comment Choisir ?
-
-### 4.1 Tableau Comparatif
-
-| Critère | Composition | Agrégation |
-|---------|-------------|------------|
-| **Relation** | "contient" (forte) | "a un" (faible) |
-| **Création** | Partie créée PAR le conteneur | Partie créée AVANT |
-| **Destruction** | Partie détruite AVEC | Partie survit |
-| **Partage** | NON (exclusif) | OUI (possible) |
-| **Implémentation** | `new` dans constructeur | Passé en paramètre |
-| **Symbole UML** | ◆─────> | ◇─────> |
-
----
-
-### 4.2 Questions à se Poser
-
-**Pour savoir si c'est une COMPOSITION** :
-
-1. ❓ La partie a-t-elle un sens sans le conteneur ?  
-   → **NON** = Composition
-
-2. ❓ Si le conteneur est détruit, la partie doit-elle l'être aussi ?  
-   → **OUI** = Composition
-
-3. ❓ La partie est-elle créée en même temps que le conteneur ?  
-   → **OUI** = Composition
-
----
-
-### 4.3 Exemples de Classification
-
-| Relation | Type | Justification |
-|----------|------|---------------|
-| Maison → Pièce | **Composition** | Une pièce n'existe pas sans maison |
-| Bibliothèque → Livre | **Agrégation** | Un livre existe avant/après la bibliothèque |
-| Ordinateur → Processeur | **Composition** | Le processeur est assemblé avec l'ordinateur |
-| Playlist → Chanson | **Agrégation** | Une chanson existe indépendamment |
-| Voiture → Roue | **Composition** | Les roues sont installées avec la voiture |
-| Parking → Voiture | **Agrégation** | Une voiture peut changer de parking |
-
----
-
-## 5. Exemple Complet : Système de Gestion d'Hôtel
-
-### 5.1 Analyse
-
-**Hôtel** :
-- **Contient** des chambres (composition)
-- **A des** clients (agrégation)
-
-```
-Hôtel ◆────────> Chambre  (composition)
-      ◇────────> Client   (agrégation)
-```
-
----
-
-### 5.2 Implémentation
-
-```java
-import java.util.ArrayList;
-import java.util.List;
-
-// Classe Chambre (composition)
-class Chambre {
-    private int numero;
-    private String type;  // Simple, Double, Suite
-    private double prixNuit;
-    private boolean estOccupee;
-    
-    Chambre(int numero, String type, double prixNuit) {
-        this.numero = numero;
-        this.type = type;
-        this.prixNuit = prixNuit;
-        this.estOccupee = false;
-    }
-    
-    void occuper() {
-        estOccupee = true;
-    }
-    
-    void liberer() {
-        estOccupee = false;
-    }
-    
-    boolean estDisponible() {
-        return !estOccupee;
-    }
-    
-    void afficher() {
-        String statut = estOccupee ? "Occupée" : "Disponible";
-        System.out.println("Chambre " + numero + " (" + type + ") - " + 
-                          prixNuit + "€/nuit - " + statut);
-    }
-}
-
-// Classe Client (agrégation)
-class Client {
-    private String nom;
-    private String email;
-    
-    Client(String nom, String email) {
-        this.nom = nom;
-        this.email = email;
-    }
-    
-    String getNom() {
-        return nom;
-    }
-    
-    void afficher() {
-        System.out.println("Client : " + nom + " (" + email + ")");
-    }
-}
-
-// Classe Hôtel
-class Hotel {
-    private String nom;
-    private List<Chambre> chambres;  // Composition
-    private List<Client> clients;    // Agrégation
-    
-    Hotel(String nom, int nombreChambres) {
-        this.nom = nom;
-        this.chambres = new ArrayList<>();
-        this.clients = new ArrayList<>();
-        
-        // Créer les chambres (composition)
-        for (int i = 1; i <= nombreChambres; i++) {
-            String type = (i % 3 == 0) ? "Suite" : (i % 2 == 0) ? "Double" : "Simple";
-            double prix = (type.equals("Suite")) ? 150 : (type.equals("Double")) ? 80 : 50;
-            chambres.add(new Chambre(i, type, prix));
-        }
-    }
-    
-    void enregistrerClient(Client client) {
-        clients.add(client);
-        System.out.println(client.getNom() + " enregistré à l'hôtel " + nom);
-    }
-    
-    void afficherChambresDisponibles() {
-        System.out.println("\nChambres disponibles :");
-        for (Chambre c : chambres) {
-            if (c.estDisponible()) {
-                c.afficher();
+    public void afficher() {
+        System.out.println("Maison située à : " + adresse);
+        System.out.println("Pièces :");
+        for (Piece p : pieces) {
+            if (p != null) {
+                p.afficher();
             }
         }
+    }
+    
+    public double surfaceTotale() {
+        double total = 0;
+        for (Piece p : pieces) {
+            if (p != null) {
+                total += p.surface;
+            }
+        }
+        return total;
+    }
+}
+
+// Utilisation
+public class TestMaison {
+    public static void main(String[] args) {
+        Maison maMaison = new Maison("15 rue des Fleurs", 4);
+        maMaison.ajouterPiece(0, "Salon", 30);
+        maMaison.ajouterPiece(1, "Cuisine", 15);
+        maMaison.ajouterPiece(2, "Chambre", 20);
+        maMaison.ajouterPiece(3, "Salle de bain", 8);
+        
+        maMaison.afficher();
+        System.out.println("Surface totale : " + maMaison.surfaceTotale() + "m²");
+    }
+}
+```
+
+---
+
+### 2.3 Cycle de Vie en Composition
+
+```java
+public class TestCycleVie {
+    public static void main(String[] args) {
+        Voiture v = new Voiture("Renault", "Clio", 90, "Essence");
+        // ✅ Création de la voiture → création automatique du moteur
+        
+        v = null;
+        // ✅ La voiture disparaît → le moteur disparaît aussi
+        // Le Garbage Collector supprime les deux
+    }
+}
+```
+
+---
+
+## 3. Agrégation : Relation "A-Un" Faible
+
+### 3.1 Définition
+
+**Agrégation** = Relation de **partage** ou **utilisation**
+
+**Caractéristiques** :
+- Les **parties existent avant** le conteneur
+- Les parties **survivent** après destruction du conteneur
+- Les parties **peuvent être partagées**
+- Cycle de vie **indépendant**
+
+**Exemples du monde réel** :
+```
+Université ◇──── Étudiant
+Bibliothèque ◇──── Livre
+Équipe ◇──── Joueur
+Playlist ◇──── Chanson
+```
+
+---
+
+### 3.2 Implémentation en Java
+
+#### Exemple 1 : Université et Étudiants
+
+```java
+class Etudiant {
+    private String nom;
+    private String matricule;
+    private double moyenne;
+    
+    public Etudiant(String nom, String matricule) {
+        this.nom = nom;
+        this.matricule = matricule;
+        this.moyenne = 0.0;
+    }
+    
+    public String getNom() {
+        return nom;
+    }
+    
+    public void setMoyenne(double moyenne) {
+        this.moyenne = moyenne;
+    }
+    
+    public void afficher() {
+        System.out.println(nom + " (" + matricule + ") - Moyenne : " + moyenne);
+    }
+}
+
+class Universite {
+    private String nom;
+    private ArrayList<Etudiant> etudiants;
+    
+    public Universite(String nom) {
+        this.nom = nom;
+        this.etudiants = new ArrayList<>();
+    }
+    
+    // ✅ L'étudiant est PASSÉ EN PARAMÈTRE (pas créé à l'intérieur)
+    public void inscrire(Etudiant etudiant) {
+        etudiants.add(etudiant);
+        System.out.println(etudiant.getNom() + " inscrit à " + nom);
+    }
+    
+    public void desinscrire(Etudiant etudiant) {
+        etudiants.remove(etudiant);
+        System.out.println(etudiant.getNom() + " désinscrit de " + nom);
+    }
+    
+    public void afficherEtudiants() {
+        System.out.println("\nÉtudiants de " + nom + " :");
+        for (Etudiant e : etudiants) {
+            e.afficher();
+        }
+    }
+}
+
+// Utilisation
+public class TestAgregation {
+    public static void main(String[] args) {
+        // Créer des étudiants INDÉPENDAMMENT
+        Etudiant alice = new Etudiant("Alice", "E001");
+        Etudiant bob = new Etudiant("Bob", "E002");
+        Etudiant charlie = new Etudiant("Charlie", "E003");
+        
+        alice.setMoyenne(15.5);
+        bob.setMoyenne(14.0);
+        charlie.setMoyenne(16.2);
+        
+        // Créer une université
+        Universite univ = new Universite("Université de Paris");
+        
+        // Inscrire les étudiants
+        univ.inscrire(alice);
+        univ.inscrire(bob);
+        univ.inscrire(charlie);
+        
+        univ.afficherEtudiants();
+        
+        // Désinscrire Bob
+        univ.desinscrire(bob);
+        
+        // ✅ Bob existe toujours, même désinscrit
+        System.out.println("\nBob après désinscription :");
+        bob.afficher();
+        
+        // ✅ Même si l'université disparaît, les étudiants existent
+        univ = null;
+        System.out.println("\nAlice après suppression de l'université :");
+        alice.afficher();
+    }
+}
+```
+
+---
+
+#### Exemple 2 : Bibliothèque et Livres
+
+```java
+import java.util.ArrayList;
+
+class Livre {
+    private String titre;
+    private String auteur;
+    private String isbn;
+    
+    public Livre(String titre, String auteur, String isbn) {
+        this.titre = titre;
+        this.auteur = auteur;
+        this.isbn = isbn;
+    }
+    
+    public String getTitre() {
+        return titre;
+    }
+    
+    public void afficher() {
+        System.out.println(titre + " - " + auteur + " (ISBN: " + isbn + ")");
+    }
+}
+
+class Bibliotheque {
+    private String nom;
+    private ArrayList<Livre> livres;
+    
+    public Bibliotheque(String nom) {
+        this.nom = nom;
+        this.livres = new ArrayList<>();
+    }
+    
+    public void ajouterLivre(Livre livre) {
+        livres.add(livre);
+        System.out.println("✅ Livre ajouté : " + livre.getTitre());
+    }
+    
+    public void retirerLivre(Livre livre) {
+        if (livres.remove(livre)) {
+            System.out.println("❌ Livre retiré : " + livre.getTitre());
+        }
+    }
+    
+    public void afficherCatalogue() {
+        System.out.println("\n📚 Catalogue de " + nom + " :");
+        for (Livre livre : livres) {
+            livre.afficher();
+        }
+    }
+}
+
+// Utilisation
+public class TestBibliotheque {
+    public static void main(String[] args) {
+        // Créer des livres
+        Livre livre1 = new Livre("1984", "George Orwell", "978-0451524935");
+        Livre livre2 = new Livre("Le Seigneur des Anneaux", "J.R.R. Tolkien", "978-0618640157");
+        Livre livre3 = new Livre("Harry Potter", "J.K. Rowling", "978-0439708180");
+        
+        // Créer une bibliothèque
+        Bibliotheque biblio = new Bibliotheque("Bibliothèque Municipale");
+        
+        // Ajouter des livres
+        biblio.ajouterLivre(livre1);
+        biblio.ajouterLivre(livre2);
+        biblio.ajouterLivre(livre3);
+        
+        biblio.afficherCatalogue();
+        
+        // Retirer un livre
+        biblio.retirerLivre(livre2);
+        
+        // ✅ Le livre existe toujours, il peut être ajouté ailleurs
+        Bibliotheque autreBiblio = new Bibliotheque("Bibliothèque Universitaire");
+        autreBiblio.ajouterLivre(livre2);
+    }
+}
+```
+
+---
+
+## 4. Composition vs Agrégation : Tableau Comparatif
+
+| Critère | Composition ◆ | Agrégation ◇ |
+|---------|---------------|---------------|
+| **Relation** | "Contient" (forte) | "A-un" (faible) |
+| **Création** | À l'intérieur du conteneur | Avant le conteneur |
+| **Cycle de vie** | Dépendant | Indépendant |
+| **Destruction** | Parties détruites avec le tout | Parties survivent |
+| **Partage** | ❌ Exclusif | ✅ Possible |
+| **Exemple** | Voiture → Moteur | Université → Étudiant |
+
+---
+
+## 5. Exercice Guidé : Système d'Entreprise
+
+### 5.1 Énoncé
+
+Modélisez une entreprise avec :
+- Une **Entreprise** qui a plusieurs **Départements** (composition)
+- Chaque **Département** emploie des **Employés** (agrégation)
+
+---
+
+### 5.2 Solution
+
+```java
+class Employe {
+    private String nom;
+    private String poste;
+    private double salaire;
+    
+    public Employe(String nom, String poste, double salaire) {
+        this.nom = nom;
+        this.poste = poste;
+        this.salaire = salaire;
+    }
+    
+    public String getNom() {
+        return nom;
+    }
+    
+    public void afficher() {
+        System.out.println("  - " + nom + " (" + poste + ") : " + salaire + "€");
+    }
+}
+
+class Departement {
+    private String nom;
+    private ArrayList<Employe> employes;
+    
+    public Departement(String nom) {
+        this.nom = nom;
+        this.employes = new ArrayList<>();
+    }
+    
+    public void embaucher(Employe employe) {
+        employes.add(employe);
+    }
+    
+    public void afficher() {
+        System.out.println("\nDépartement : " + nom);
+        for (Employe e : employes) {
+            e.afficher();
+        }
+    }
+}
+
+class Entreprise {
+    private String nom;
+    private ArrayList<Departement> departements;
+    
+    public Entreprise(String nom) {
+        this.nom = nom;
+        this.departements = new ArrayList<>();
+    }
+    
+    // COMPOSITION : créer un département
+    public void creerDepartement(String nomDept) {
+        Departement dept = new Departement(nomDept);
+        departements.add(dept);
+    }
+    
+    public Departement getDepartement(int index) {
+        return departements.get(index);
+    }
+    
+    public void afficher() {
+        System.out.println("========== " + nom + " ==========");
+        for (Departement d : departements) {
+            d.afficher();
+        }
+    }
+}
+
+// Utilisation
+public class TestEntreprise {
+    public static void main(String[] args) {
+        // Créer des employés
+        Employe e1 = new Employe("Alice", "Développeuse", 45000);
+        Employe e2 = new Employe("Bob", "Designer", 40000);
+        Employe e3 = new Employe("Charlie", "Manager", 55000);
+        
+        // Créer une entreprise
+        Entreprise entreprise = new Entreprise("TechCorp");
+        
+        // Créer des départements (COMPOSITION)
+        entreprise.creerDepartement("Informatique");
+        entreprise.creerDepartement("Design");
+        
+        // Embaucher des employés (AGRÉGATION)
+        entreprise.getDepartement(0).embaucher(e1);
+        entreprise.getDepartement(0).embaucher(e3);
+        entreprise.getDepartement(1).embaucher(e2);
+        
+        entreprise.afficher();
     }
 }
 ```
@@ -577,22 +542,22 @@ class Hotel {
 
 ## 📝 Résumé de la Section
 
-| Concept | Points clés |
+| Concept | Description |
 |---------|-------------|
-| **Composition** | Partie créée DANS le conteneur, cycle de vie dépendant |
-| **Agrégation** | Partie passée EN PARAMÈTRE, cycle de vie indépendant |
-| **Choix** | Si la partie n'a pas de sens seule → Composition |
+| **Composition** | Relation forte : les parties sont créées par et meurent avec le conteneur |
+| **Agrégation** | Relation faible : les parties existent indépendamment |
+| **Cycle de vie** | Composition = dépendant, Agrégation = indépendant |
 
 ---
 
 ## 🎯 Points à Retenir
 
-1. **Composition** = "contient" → `new` dans le constructeur
-2. **Agrégation** = "a un" → Objet passé en paramètre
-3. Composition : partie **détruite avec** le conteneur
-4. Agrégation : partie **survit** au conteneur
-5. Posez-vous : "La partie a-t-elle un sens seule ?" → **NON** = Composition
+1. **Composition** : "Le moteur FAIT PARTIE de la voiture"
+2. **Agrégation** : "L'étudiant APPARTIENT À l'université (mais peut exister sans)"
+3. Composition → `new` **dans** le constructeur
+4. Agrégation → objet **passé en paramètre**
+5. Choix dépend du **contexte métier**
 
 ---
 
-**Prochaine section** : [Section 7 : Paquetages (Packages) →](../07-Paquetages/README.md)
+**Prochaine section** : [Section 7 : Packages (Paquetages) →](../07-Packages/README.md)
