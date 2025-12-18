@@ -4,7 +4,7 @@
 
 [![Java](https://img.shields.io/badge/Java-17+-orange.svg)](https://www.oracle.com/java/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Progression](https://img.shields.io/badge/Progression-100%25-success.svg)](#)
 
 ---
 
@@ -52,7 +52,7 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Types primitifs et variables
 - Chaînes de caractères (String)
 - Tableaux (1D et 2D)
-- **4 exercices** progressifs
+- **3 exemples de code**
 
 ---
 
@@ -63,7 +63,7 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Créer et manipuler des objets
 - Constructeurs et surcharge
 - Le mot-clé `this`
-- **4 exercices** : Smartphone, Cercle, Livre, Portefeuille
+- Garbage Collector
 
 ---
 
@@ -73,31 +73,80 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Membres statiques (`static`)
 - Constantes (`final`)
 - Blocs d'initialisation statiques
-- Méthodes utilitaires
-- **3 exercices** : Compteur, Configuration, Math Utils
+- Classes utilitaires
 
 ---
 
-### 🔴 **Section 6 : Héritage**
-📂 [`06-Heritage/`](06-Heritage/)
+### 🔴 **Section 6 : Relations entre Classes**
+📂 [`06-Relations-Classes/`](06-Relations-Classes/)
 
-- Concept d'héritage
-- Mot-clé `extends`
+- **Composition** (relation forte)
+- **Agrégation** (relation faible)
+- Cycles de vie des objets
+- **Exemples** : Voiture/Moteur, Université/Étudiant
+
+---
+
+### ⚫ **Section 7 : Packages (Paquetages)**
+📂 [`07-Packages/`](07-Packages/)
+
+- Organisation en packages
+- Import (spécifique, wildcard, nom complet)
+- Conventions de nommage
+- Résolution des conflits
+
+---
+
+### 🟢 **Section 8 : Encapsulation**
+📂 [`08-Encapsulation/`](08-Encapsulation/)
+
+- Modificateurs d'accès (private, public, protected, default)
+- Getters et Setters
+- Validation dans les setters
+- Principe du moindre privilège
+
+---
+
+### 🔵 **Section 9 : Héritage**
+📂 [`09-Heritage/`](09-Heritage/)
+
+- Concept d'héritage (`extends`)
 - Constructeurs et `super`
-- Modificateur `protected`
 - Redéfinition de méthodes (`@Override`)
-- **3 exercices** : Animal/Chat/Chien, Véhicules, Formes géométriques
+- Modificateur `final`
+- **Exemples** : Animal/Chien/Chat, Personne/Étudiant/Enseignant
 
 ---
 
-### ⚫ **Section 7 : Polymorphisme**
-📂 [`07-Polymorphisme/`](07-Polymorphisme/)
+### 🟡 **Section 10 : Polymorphisme**
+📂 [`10-Polymorphisme/`](10-Polymorphisme/)
 
 - Polymorphisme et liaison dynamique
 - Classes abstraites
 - Interfaces
-- Downcasting et instanceof
-- **3 exercices** complets
+- Casting (upcast/downcast)
+- Opérateur `instanceof`
+
+---
+
+### 🟠 **Section 11 : Interfaces Fonctionnelles**
+📂 [`11-Interfaces-Fonctionnelles/`](11-Interfaces-Fonctionnelles/)
+
+- Expressions lambda
+- Predicate, Function, Consumer, Supplier, BinaryOperator
+- Streams et opérations (map, filter, reduce)
+- Programmation fonctionnelle en Java
+
+---
+
+### 🔴 **Section 12 : Exceptions**
+📂 [`12-Exceptions/`](12-Exceptions/)
+
+- Gestion des erreurs avec try-catch-finally
+- Lancer des exceptions (`throw`)
+- Déclarer des exceptions (`throws`)
+- Exceptions vérifiées vs non vérifiées
+- Créer des exceptions personnalisées
 
 ---
 
@@ -167,11 +216,13 @@ XX-Nom-Section/
 | 1 | Sections 1-2 | 6h |
 | 2 | Section 3 | 8h |
 | 3 | Section 4 | 10h |
-| 4 | Section 5 | 6h |
-| 5 | Section 6 | 10h |
-| 6 | Section 7 | 10h |
+| 4 | Section 5-6 | 12h |
+| 5 | Sections 7-8 | 10h |
+| 6 | Section 9 | 10h |
+| 7 | Section 10 | 10h |
+| 8 | Sections 11-12 | 14h |
 
-**Total : ~50 heures** (cours + exercices)
+**Total : ~80 heures** (cours + exercices)
 
 ---
 
@@ -184,13 +235,11 @@ Les contributions sont les bienvenues ! Vous pouvez :
 - 📝 Améliorer la documentation
 - 🌍 Traduire le cours
 
-Consultez [CONTRIBUTING.md](CONTRIBUTING.md) pour plus de détails.
-
 ---
 
 ## 📜 Licence
 
-Ce projet est sous licence MIT. Voir [LICENSE](LICENSE) pour plus d'informations.
+Ce projet est sous licence MIT.
 
 ---
 
