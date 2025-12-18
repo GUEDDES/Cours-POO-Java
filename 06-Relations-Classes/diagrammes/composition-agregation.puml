@@ -1,0 +1,68 @@
+@startuml Composition et Agrégation
+
+' Configuration
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam backgroundColor #FFFFFF
+
+title Relations : Composition vs Agrégation
+
+' COMPOSITION : Voiture et Moteur
+package "COMPOSITION (Relation Forte)" {
+  class Voiture {
+    - marque : String
+    - modele : String
+    + demarrer() : void
+    + arreter() : void
+    + rouler(vitesse : int) : void
+  }
+  
+  class Moteur {
+    - puissance : int
+    - type : String
+    - enMarche : boolean
+    + demarrer() : void
+    + arreter() : void
+  }
+  
+  Voiture "1" *-- "1" Moteur : contient >
+  note right of Voiture
+    Le moteur est créé
+    DANS le constructeur
+    de Voiture
+  end note
+}
+
+' AGRÉGATION : Université et Étudiant
+package "AGRÉGATION (Relation Faible)" {
+  class Universite {
+    - nom : String
+    - ville : String
+    + inscrire(e : Etudiant) : void
+    + desinscrire(e : Etudiant) : void
+    + afficherEtudiants() : void
+  }
+  
+  class Etudiant {
+    - nom : String
+    - matricule : String
+    - moyenne : double
+    + afficher() : void
+  }
+  
+  Universite "1" o-- "0..*" Etudiant : a >
+  note right of Universite
+    L'étudiant est passé
+    EN PARAMÈTRE à
+    la méthode inscrire()
+  end note
+}
+
+' Légende
+legend right
+  <b>Symboles UML :</b>
+  ◆─── Composition (losange plein)
+  ◇─── Agrégation (losange vide)
+endlegend
+
+@enduml

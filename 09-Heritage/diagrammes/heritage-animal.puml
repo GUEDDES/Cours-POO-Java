@@ -1,0 +1,83 @@
+@startuml Hiérarchie Animal
+
+' Configuration
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam backgroundColor #FFFFFF
+
+title Hiérarchie d'Héritage : Animal
+
+' Classe mère
+abstract class Animal {
+  # nom : String
+  # age : int
+  # espece : String
+  + Animal(nom, age, espece)
+  + manger() : void
+  + dormir() : void
+  + faireDuBruit() : void
+  + afficher() : void
+}
+
+' Classes filles
+class Chien {
+  - race : String
+  + Chien(nom, age, race)
+  + faireDuBruit() : void
+  + jouerAvecBalle() : void
+  + afficher() : void
+}
+
+class Chat {
+  - couleur : String
+  + Chat(nom, age, couleur)
+  + faireDuBruit() : void
+  + grimper() : void
+  + afficher() : void
+}
+
+class Oiseau {
+  - envergure : double
+  + Oiseau(nom, age, envergure)
+  + faireDuBruit() : void
+  + voler() : void
+  + afficher() : void
+}
+
+' Relations d'héritage
+Animal <|-- Chien
+Animal <|-- Chat
+Animal <|-- Oiseau
+
+' Notes
+note right of Animal
+  Classe mère avec
+  méthodes communes
+  à tous les animaux
+end note
+
+note right of Chien
+  Redéfinit faireDuBruit()
+  Ajoute jouerAvecBalle()
+end note
+
+note right of Chat
+  Redéfinit faireDuBruit()
+  Ajoute grimper()
+end note
+
+note right of Oiseau
+  Redéfinit faireDuBruit()
+  Ajoute voler()
+end note
+
+' Légende
+legend right
+  <b>Symboles UML :</b>
+  ──▷ Héritage (flèche vide)
+  # protected
+  - private
+  + public
+endlegend
+
+@enduml

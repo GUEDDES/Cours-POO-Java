@@ -1,0 +1,88 @@
+@startuml Polymorphisme
+
+' Configuration
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam backgroundColor #FFFFFF
+
+title Polymorphisme : Classes Abstraites et Interfaces
+
+' Classe abstraite
+abstract class Forme {
+  # couleur : String
+  + Forme(couleur)
+  + {abstract} calculerAire() : double
+  + {abstract} calculerPerimetre() : double
+  + afficherCouleur() : void
+}
+
+' Classes concrètes
+class Rectangle {
+  - longueur : double
+  - largeur : double
+  + Rectangle(couleur, longueur, largeur)
+  + calculerAire() : double
+  + calculerPerimetre() : double
+}
+
+class Cercle {
+  - rayon : double
+  + Cercle(couleur, rayon)
+  + calculerAire() : double
+  + calculerPerimetre() : double
+}
+
+class Triangle {
+  - base : double
+  - hauteur : double
+  - cote1, cote2, cote3 : double
+  + Triangle(couleur, base, hauteur)
+  + calculerAire() : double
+  + calculerPerimetre() : double
+}
+
+' Héritage
+Forme <|-- Rectangle
+Forme <|-- Cercle
+Forme <|-- Triangle
+
+' Interface
+interface Dessinable {
+  + dessiner() : void
+  + effacer() : void
+}
+
+' Implémentation interface
+Dessinable <|.. Rectangle
+Dessinable <|.. Cercle
+
+' Notes
+note top of Forme
+  Classe abstraite :
+  - Ne peut pas être instanciée
+  - Contient méthodes abstraites
+  - Peut contenir méthodes concrètes
+end note
+
+note right of Dessinable
+  Interface :
+  - Contrat de méthodes
+  - 100% abstraite
+  - Une classe peut implémenter
+    plusieurs interfaces
+end note
+
+note bottom of Rectangle
+  Implémente Dessinable
+  ET hérite de Forme
+end note
+
+' Légende
+legend right
+  <b>Symboles UML :</b>
+  ──▷ Héritage
+  ──▷ Implémentation (pointillé)
+  {abstract} Méthode abstraite
+endlegend
+
+@enduml
