@@ -6,6 +6,8 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Progression](https://img.shields.io/badge/Progression-100%25-success.svg)](#)
 [![Exemples](https://img.shields.io/badge/Exemples-9-brightgreen.svg)](#)
+[![Exercices](https://img.shields.io/badge/Exercices-8-yellow.svg)](#)
+[![Solutions](https://img.shields.io/badge/Solutions-8%2F8-success.svg)](#)
 [![UML](https://img.shields.io/badge/Diagrammes_UML-3-blueviolet.svg)](#)
 
 ---
@@ -25,10 +27,10 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 ### 📊 Contenu du Dépôt
 
 - **12 sections complètes** avec théorie détaillée
-- **9+ exemples de code** fonctionnels et commentés
-- **4 exercices** avec solutions
+- **9 exemples de code** fonctionnels et commentés
+- **8 exercices** avec solutions complètes
 - **3 diagrammes UML** (PlantUML)
-- **Documentation complète** (README, CONTRIBUTING, LICENSE)
+- **Documentation complète** (README, CONTRIBUTING, LICENSE, SCREENSHOTS)
 
 ---
 
@@ -40,7 +42,7 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Cycle de vie d'un logiciel
 - Méthodologies de développement
 - Qualité logicielle et bonnes pratiques
-- **2 exercices** avec solutions
+- **2 exercices** avec solutions détaillées
 
 ---
 
@@ -75,6 +77,7 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Le mot-clé `this`
 - Garbage Collector
 - **2 exemples** : Voiture, CompteBancaire
+- **1 exercice** : Classe Étudiant (avec solution)
 
 ---
 
@@ -85,7 +88,8 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Constantes (`final`)
 - Blocs d'initialisation statiques
 - Classes utilitaires
-- **Exemple** : Calculatrice (classe utilitaire complète)
+- **1 exemple** : Calculatrice (classe utilitaire complète)
+- **1 exercice** : MathPlus (avec solution)
 
 ---
 
@@ -96,6 +100,7 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - **Agrégation** (relation faible)
 - Cycles de vie des objets
 - **2 exemples** : VoitureMoteur, UniversiteEtudiant
+- **1 exercice** : Bibliothèque (avec solution)
 - **📊 Diagramme UML** : Composition vs Agrégation
 
 ---
@@ -129,7 +134,8 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Constructeurs et `super`
 - Redéfinition de méthodes (`@Override`)
 - Modificateur `final`
-- **Exemple** : AnimalHierarchie (Chien, Chat, Oiseau)
+- **1 exemple** : AnimalHierarchie (Chien, Chat, Oiseau)
+- **1 exercice** : Hiérarchie Véhicules (avec solution)
 - **📊 Diagramme UML** : Hiérarchie Animal
 
 ---
@@ -142,7 +148,8 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Interfaces
 - Casting (upcast/downcast)
 - Opérateur `instanceof`
-- **Exemple** : SystemePaiement (CarteBancaire, PayPal, Especes)
+- **1 exemple** : SystemePaiement (CarteBancaire, PayPal, Especes)
+- **1 exercice** : Formes Géométriques (avec solution)
 - **📊 Diagramme UML** : Polymorphisme avec classes abstraites et interfaces
 
 ---
@@ -166,7 +173,8 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Déclarer des exceptions (`throws`)
 - Exceptions vérifiées vs non vérifiées
 - Créer des exceptions personnalisées
-- **Exemple** : GestionFichiers avec exceptions personnalisées
+- **1 exemple** : GestionFichiers avec exceptions personnalisées
+- **1 exercice** : Comptes Bancaires (avec solution)
 
 ---
 
@@ -250,6 +258,12 @@ XX-Nom-Section/
 
 ---
 
+## 📸 Captures d'Écran
+
+Consultez [SCREENSHOTS.md](SCREENSHOTS.md) pour voir les résultats d'exécution de tous les exemples.
+
+---
+
 ## 🤝 Contribution
 
 Les contributions sont les bienvenues ! Vous pouvez :
@@ -294,10 +308,10 @@ Si ce cours vous a été utile :
 ## 📊 Statistiques du Projet
 
 - 📚 **12 sections** complètes
-- 💻 **9+ exemples** de code
+- 💻 **9 exemples** de code fonctionnels
 - 📊 **3 diagrammes** UML
-- ✅ **4 exercices** avec solutions
-- 📖 **~5000 lignes** de documentation
+- ✏️ **8 exercices** avec solutions
+- 📖 **~7000 lignes** de documentation
 - 👥 **1+ contributeur**
 
 ---
