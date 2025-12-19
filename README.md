@@ -9,10 +9,31 @@
 [![Exercices](https://img.shields.io/badge/Exercices-8-yellow.svg)](#)
 [![Solutions](https://img.shields.io/badge/Solutions-8%2F8-success.svg)](#)
 [![UML](https://img.shields.io/badge/Diagrammes_UML-3-blueviolet.svg)](#)
+[![TDs](https://img.shields.io/badge/TDs-3-informational.svg)](#-travaux-dirigés-tds)
 
 ---
 
-## 📖 À propos de ce cours
+## 📚 Ressources pédagogiques
+
+📚 **[Sections de Cours](#-structure-du-cours)** | 💻 **[Exemples de Code](#)** | ✏️ **[Travaux Dirigés (TDs)](TDs/)** | 📊 **[Diagrammes UML](#)**
+
+---
+
+## 📍 Accès rapide
+
+### 📚 Théorie
+- 📖 **[Cours complet par sections](#-structure-du-cours)**
+- 📊 **[Diagrammes UML](diagrammes/)**
+- 📄 **[Documentation complète](CONTRIBUTING.md)**
+
+### 💻 Pratique
+- ✏️ **[Travaux Dirigés (TDs)](TDs/)** - **3 TDs progressifs**
+- 💻 **[Exemples de code](exemples/)**
+- 📈 **[Sorties d'exécution](SCREENSHOTS.md)**
+
+---
+
+## 📚 À propos de ce cours
 
 Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation Orientée Objet** en utilisant Java. Il couvre progressivement tous les concepts fondamentaux jusqu'aux notions avancées.
 
@@ -27,10 +48,52 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 ### 📊 Contenu du Dépôt
 
 - **12 sections complètes** avec théorie détaillée
+- **3 Travaux Dirigés (TDs)** avec énoncés et corrections
 - **9 exemples de code** fonctionnels et commentés
 - **8 exercices** avec solutions complètes
 - **3 diagrammes UML** (PlantUML)
 - **Documentation complète** (README, CONTRIBUTING, LICENSE, SCREENSHOTS)
+
+---
+
+## ✏️ Travaux Dirigés (TDs)
+
+### 📚 [TD 1 : Fondements de POO](TDs/TD1-Fondements/)
+
+**Concepts** : Structures de contrôle, Scanner, types primitifs, validation
+
+**Exercices** :
+1. Calcul du factoriel
+2. Calculatrice simple
+3. Recherche de caractère
+4. Jeu du nombre secret
+
+🔗 **[Accéder au TD1](TDs/TD1-Fondements/)**
+
+---
+
+### 📚 [TD 2 : Objets & Classes](TDs/TD2-Classes-Objets/)
+
+**Concepts** : Classes, constructeurs, encapsulation, tableaux d'objets
+
+**Exercices** :
+1. Classe Complexe (nombres complexes)
+2. Classe Etudiant (gestion de notes)
+
+🔗 **[Accéder au TD2](TDs/TD2-Classes-Objets/)**
+
+---
+
+### 📚 [TD 3 : Révision & Synthèse](TDs/TD3-Revision-Synthese/)
+
+**Concepts** : Héritage, classes abstraites, interfaces, static, polymorphisme
+
+**Exercices** :
+1. Questions de cours (théorie)
+2. Système de gestion de transport (Vehicule, Voiture, Bateau)
+3. Classe Bibliotheque (attribut static)
+
+🔗 **[Accéder au TD3](TDs/TD3-Revision-Synthese/)**
 
 ---
 
@@ -180,19 +243,20 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 
 ## 🚀 Comment utiliser ce cours ?
 
-### 📖 Pour les débutants
+### 📚 Pour les débutants
 
 1. **Suivez l'ordre** : Les sections sont progressives
 2. **Lisez le cours** : Chaque section contient un `README.md` détaillé
 3. **Étudiez les exemples** : Analysez le code dans le dossier `exemples/`
-4. **Pratiquez** : Faites les exercices AVANT de regarder les solutions
-5. **Expérimentez** : Modifiez le code et observez les résultats
+4. **Faites les TDs** : 👉 **[Commencer par le TD1](TDs/TD1-Fondements/)**
+5. **Pratiquez** : Faites les exercices AVANT de regarder les solutions
+6. **Expérimentez** : Modifiez le code et observez les résultats
 
 ### 🏃 Pour les développeurs expérimentés
 
 - Utilisez le sommaire pour naviguer directement vers les concepts qui vous intéressent
+- Consultez les **[TDs](TDs/)** pour évaluer rapidement vos connaissances
 - Consultez les diagrammes UML pour une vue d'ensemble
-- Testez les exercices pour évaluer vos connaissances
 - Contribuez en proposant de nouveaux exemples ou exercices !
 
 ---
@@ -243,22 +307,22 @@ XX-Nom-Section/
 
 ## 🎯 Progression Recommandée
 
-| Semaine | Sections | Temps estimé |
-|---------|----------|--------------|
-| 1 | Sections 1-2 | 6h |
-| 2 | Section 3 | 8h |
-| 3 | Section 4 | 10h |
-| 4 | Section 5-6 | 12h |
-| 5 | Sections 7-8 | 10h |
-| 6 | Section 9 | 10h |
-| 7 | Section 10 | 10h |
-| 8 | Sections 11-12 | 14h |
+| Semaine | Sections | TDs | Temps estimé |
+|---------|----------|-----|---------------|
+| 1 | Sections 1-2 | - | 6h |
+| 2 | Section 3 | **TD1** | 10h |
+| 3 | Section 4 | **TD2** | 12h |
+| 4 | Section 5-6 | - | 12h |
+| 5 | Sections 7-8 | - | 10h |
+| 6 | Section 9 | **TD3** | 12h |
+| 7 | Section 10 | - | 10h |
+| 8 | Sections 11-12 | - | 14h |
 
-**Total : ~80 heures** (cours + exercices + pratique)
+**Total : ~86 heures** (cours + TDs + exercices + pratique)
 
 ---
 
-## 📸 Captures d'Écran
+## 📈 Captures d'Écran
 
 Consultez [SCREENSHOTS.md](SCREENSHOTS.md) pour voir les résultats d'exécution de tous les exemples.
 
@@ -308,10 +372,11 @@ Si ce cours vous a été utile :
 ## 📊 Statistiques du Projet
 
 - 📚 **12 sections** complètes
+- ✏️ **3 TDs** avec corrections complètes
 - 💻 **9 exemples** de code fonctionnels
 - 📊 **3 diagrammes** UML
 - ✏️ **8 exercices** avec solutions
-- 📖 **~7000 lignes** de documentation
+- 📚 **~7000 lignes** de documentation
 - 👥 **1+ contributeur**
 
 ---
