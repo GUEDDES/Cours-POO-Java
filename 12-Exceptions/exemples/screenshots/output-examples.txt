@@ -1,0 +1,40 @@
+# Sorties Texte des Exemples - Section 12
+
+## GestionFichiers.java
+
+```
+$ javac GestionFichiers.java
+$ java GestionFichiers
+=== GESTION D'EXCEPTIONS : FICHIERS ===
+
+--- Création du fichier ---
+✅ Fichier créé : test_exceptions.txt
+
+--- Écriture dans le fichier ---
+✅ Contenu écrit dans test_exceptions.txt (4 lignes)
+
+--- Lecture du fichier ---
+✅ Fichier lu : test_exceptions.txt (4 lignes)
+
+Contenu :
+  1. Ligne 1 : Hello World!
+  2. Ligne 2 : Gestion des exceptions
+  3. Ligne 3 : Try-Catch-Finally
+  4. Ligne 4 : Exceptions personnalisées
+
+--- Tentative de recréation (provoque exception) ---
+❌ Exception capturée : FichierException [Code: ERR_FICHIER_EXISTE, Fichier: test_exceptions.txt] Le fichier existe déjà
+   Code d'erreur : ERR_FICHIER_EXISTE
+
+--- Suppression du fichier ---
+✅ Fichier supprimé : test_exceptions.txt
+
+--- Tentative de lecture après suppression ---
+❌ Exception capturée : Le fichier n'existe pas
+   Code : ERR_FICHIER_INTROUVABLE
+
+🏁 Programme terminé (bloc finally toujours exécuté)
+
+--- Test exception non vérifiée ---
+❌ ArithmeticException capturée : / by zero
+```

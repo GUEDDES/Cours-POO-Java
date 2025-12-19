@@ -1,0 +1,92 @@
+# Sorties Texte des Exemples - Section 6
+
+## VoitureMoteur.java (COMPOSITION)
+
+```
+$ javac VoitureMoteur.java
+$ java VoitureMoteur
+=== COMPOSITION : VOITURE ET MOTEUR ===
+
+--- Création d'une voiture ---
+⚙️  Moteur 1.5L Essence créé
+🚗 Voiture Peugeot 308 créée
+
+--- Utilisation de la voiture ---
+🔑 Démarrage de la voiture...
+  ⚙️  Le moteur démarre (Vroom!)
+🚗 Accélération...
+  ⚙️  Le moteur tourne à 3000 RPM
+🚗 Conduite normale...
+  ⚙️  Le moteur tourne à 2000 RPM
+🛑 Arrêt de la voiture...
+  ⚙️  Le moteur s'éteint
+
+========== INFORMATIONS VOITURE ==========
+Modèle : Peugeot 308
+Moteur  : 1.5L - Essence - 110 chevaux
+État    : 🛑 Arrêtée
+==========================================
+
+🗑️  La voiture est détruite
+  🗑️  Le moteur est détruit (COMPOSITION : cycle de vie lié)
+
+Explication COMPOSITION :
+Le moteur est créé avec la voiture et détruit avec elle.
+Il ne peut pas exister indépendamment.
+```
+
+## UniversiteEtudiant.java (AGRÉGATION)
+
+```
+$ javac UniversiteEtudiant.java
+$ java UniversiteEtudiant
+=== AGRÉGATION : UNIVERSITÉ ET ÉTUDIANTS ===
+
+--- Création des étudiants ---
+🎓 Étudiant créé : E00001 - Alice DUPONT
+🎓 Étudiant créé : E00002 - Bob MARTIN
+🎓 Étudiant créé : E00003 - Charlie DURAND
+
+--- Création de l'université ---
+🏛️ Université Sorbonne créée
+
+--- Inscription des étudiants ---
+✅ Alice DUPONT inscrit(e) à Sorbonne
+✅ Bob MARTIN inscrit(e) à Sorbonne
+✅ Charlie DURAND inscrit(e) à Sorbonne
+
+========== UNIVERSITÉ SORBONNE ==========
+Nom : Sorbonne
+Adresse : 1 rue Victor Hugo, Paris
+Étudiants inscrits : 3
+
+Liste des étudiants :
+  1. E00001 - Alice DUPONT (Informatique)
+  2. E00002 - Bob MARTIN (Mathématiques)
+  3. E00003 - Charlie DURAND (Physique)
+=========================================
+
+--- Bob quitte l'université ---
+🚪 Bob MARTIN a quitté Sorbonne
+
+========== UNIVERSITÉ SORBONNE ==========
+Nom : Sorbonne
+Adresse : 1 rue Victor Hugo, Paris
+Étudiants inscrits : 2
+
+Liste des étudiants :
+  1. E00001 - Alice DUPONT (Informatique)
+  2. E00003 - Charlie DURAND (Physique)
+=========================================
+
+🗑️  L'université Sorbonne est fermée
+
+--- Les étudiants existent toujours ---
+🎓 Alice DUPONT existe encore (AGRÉGATION)
+🎓 Bob MARTIN existe encore (AGRÉGATION)
+🎓 Charlie DURAND existe encore (AGRÉGATION)
+
+Explication AGRÉGATION :
+Les étudiants existent indépendamment de l'université.
+Ils peuvent changer d'université ou continuer à exister après la fermeture.
+```

@@ -1,0 +1,84 @@
+# Sorties Texte des Exemples - Section 10
+
+## SystemePaiement.java
+
+```
+$ javac SystemePaiement.java
+$ java SystemePaiement
+🏪 === SYSTÈME DE PAIEMENT POLYMORPHE ===
+
+========================================
+🛠️  TRANSACTION #1
+Référence : REF1734608523001
+Type      : Carte Bancaire
+========================================
+💳 Paiement par Carte Bancaire
+   Titulaire : Alice Dupont
+   Numéro    : **** **** **** 5678
+   Montant   : 45,50€
+   ✅ Paiement autorisé
+
+✅ TRANSACTION RÉUSSIE
+========================================
+
+========================================
+🛠️  TRANSACTION #2
+Référence : REF1734608523502
+Type      : PayPal
+========================================
+🔵 Paiement via PayPal
+   Email     : bob@exemple.com
+   Montant   : 30,00€
+   ✅ Transaction PayPal réussie
+
+✅ TRANSACTION RÉUSSIE
+========================================
+
+========================================
+🛠️  TRANSACTION #3
+Référence : REF1734608524003
+Type      : Espèces
+========================================
+💵 Paiement en Espèces
+   Montant   : 25,00€
+   Reçu      : 30,00€
+   💰 Rendu    : 5,00€
+   ✅ Paiement encaissé
+
+✅ TRANSACTION RÉUSSIE
+========================================
+
+========================================
+🛠️  TRANSACTION #4
+Référence : REF1734608524504
+Type      : Carte Bancaire
+========================================
+💳 Paiement par Carte Bancaire
+   Titulaire : Charlie Martin
+   Numéro    : **** **** **** 5432
+   Montant   : 120,00€
+   ✅ Paiement autorisé
+
+✅ TRANSACTION RÉUSSIE
+========================================
+
+========================================
+🛠️  TRANSACTION #5
+Référence : REF1734608525005
+Type      : PayPal
+========================================
+🔵 Paiement via PayPal
+   Email     : diane@exemple.com
+   Montant   : 15,99€
+   ✅ Transaction PayPal réussie
+
+✅ TRANSACTION RÉUSSIE
+========================================
+
+
+📋 ========== BILAN DE LA JOURNÉE ==========
+Nombre de transactions : 5
+Total encaissé         : 236,49€
+==========================================
+
+```

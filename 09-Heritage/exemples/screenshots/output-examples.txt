@@ -1,0 +1,82 @@
+# Sorties Texte des Exemples - Section 9
+
+## AnimalHierarchie.java
+
+```
+$ javac AnimalHierarchie.java
+$ java AnimalHierarchie
+=== HÉRITAGE : HIÉRARCHIE D'ANIMAUX ===
+
+--- Création des animaux ---
+🐶 Chien créé : Rex
+🐱 Chat créé : Mimi
+🐦 Oiseau créé : Tweety
+
+Nombre total d'animaux : 3
+
+--- Informations des animaux ---
+
+========== INFORMATIONS ANIMAL ==========
+Nom       : Rex
+Espèce    : Chien
+Âge       : 3 ans
+Poids     : 25.0 kg
+Race      : Labrador
+Dressé    : Oui
+=========================================
+
+========== INFORMATIONS ANIMAL ==========
+Nom       : Mimi
+Espèce    : Chat
+Âge       : 2 ans
+Poids     : 4.5 kg
+Couleur   : Gris
+Int./Ext. : Intérieur
+=========================================
+
+========== INFORMATIONS ANIMAL ==========
+Nom       : Tweety
+Espèce    : Oiseau
+Âge       : 1 ans
+Poids     : 0.3 kg
+Envergure : 0.25 m
+Vol       : Oui
+=========================================
+
+--- POLYMORPHISME : Tous les animaux font du bruit ---
+🐶 Rex fait : Woof! Woof!
+🐱 Mimi fait : Miaou!
+🐦 Tweety fait : Cui cui!
+
+--- POLYMORPHISME : Tous les animaux se déplacent ---
+🐶 Rex court sur ses 4 pattes
+🐱 Mimi marche silencieusement
+🐦 Tweety vole dans les airs
+
+--- Méthodes spécifiques ---
+
+🤴 Rex rapporte la balle !
+😻 Mimi ronronne doucement... Prrrrr
+✈️ Tweety s'envole à 0.25m d'envergure !
+
+--- Nourrir tous les animaux ---
+🍖 Rex mange des croquettes pour chien
+🍖 Mimi mange de la pâtée pour chat
+🍖 Tweety mange des graines
+
+--- Vieillir d'un an ---
+Rex a maintenant 4 ans
+Mimi a maintenant 3 ans
+Tweety a maintenant 2 ans
+
+--- Utilisation de instanceof ---
+Rex est un Chien ✅
+Mimi est un Chat ✅
+Tweety est un Oiseau ✅
+
+Rex est un Animal ✅
+Mimi est un Animal ✅
+Tweety est un Animal ✅
+
+🏁 Programme terminé - Nombre total d'animaux créés : 3
+```

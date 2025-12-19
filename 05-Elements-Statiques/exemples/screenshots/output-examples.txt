@@ -1,0 +1,48 @@
+# Sorties Texte des Exemples - Section 5
+
+## Calculatrice.java
+
+```
+$ javac Calculatrice.java
+$ java Calculatrice
+=== CLASSE UTILITAIRE : CALCULATRICE ===
+
+--- Constantes Mathématiques ---
+PI = 3.141592653589793
+E (nombre d'Euler) = 2.718281828459045
+
+--- Opérations de Base ---
+10 + 5 = 15
+10 - 5 = 5
+10 * 5 = 50
+10 / 5 = 2.0
+
+--- Puissances et Racines ---
+2^10 = 1024.0
+Racine carrée de 144 = 12.0
+Racine cubique de 27 = 3.0
+
+--- Fonctions Trigonométriques ---
+sin(30°) = 0.50
+cos(60°) = 0.50
+tan(45°) = 1.00
+
+--- Logarithmes ---
+log(100) = 2.00
+ln(e) = 1.00
+
+--- Conversions ---
+100°C = 212.00°F
+32°F = 0.00°C
+10 km = 6.21 miles
+5 miles = 8.05 km
+
+--- Fonctions Avancées ---
+Factorielle de 5 = 120
+PGCD(48, 18) = 6
+PPCM(12, 18) = 36
+15 est premier ? false
+17 est premier ? true
+
+✅ Tous les tests réussis !
+```
