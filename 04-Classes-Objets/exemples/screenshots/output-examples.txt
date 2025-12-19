@@ -1,0 +1,88 @@
+# Sorties Texte des Exemples - Section 4
+
+## Voiture.java
+
+```
+$ javac Voiture.java
+$ java Voiture
+=== TEST CLASSE VOITURE ===
+
+========== INFORMATIONS VOITURE ==========
+Marque      : Inconnue
+Modèle      : Inconnu
+Année       : 2024
+Kilométrage : 0.0 km
+État        : 🛑 Arrêtée
+==========================================
+
+========== INFORMATIONS VOITURE ==========
+Marque      : Peugeot
+Modèle      : 308
+Année       : 2023
+Kilométrage : 0.0 km
+État        : 🛑 Arrêtée
+==========================================
+
+--- Scénario d'utilisation ---
+🚗 Peugeot 308 a démarré
+✅ Vous avez parcouru 50.5 km (Total : 50.5 km)
+✅ Vous avez parcouru 30.0 km (Total : 80.5 km)
+🛑 Peugeot 308 s'est arrêtée
+❌ Impossible de rouler : la voiture n'est pas démarrée
+
+========== INFORMATIONS VOITURE ==========
+Marque      : Peugeot
+Modèle      : 308
+Année       : 2023
+Kilométrage : 80.5 km
+État        : 🛑 Arrêtée
+==========================================
+
+Représentation : Peugeot 308 (2023) - 80.5 km
+```
+
+## CompteBancaire.java
+
+```
+$ javac CompteBancaire.java
+$ java CompteBancaire
+=== TEST COMPTE BANCAIRE ===
+✅ Compte créé : CPT000001 pour Alice Dupont
+✅ Compte créé : CPT000002 pour Bob Martin
+
+Nombre total de comptes : 2
+
+========== RELEVÉ DE COMPTE ==========
+Numéro  : CPT000001
+Titulaire : Alice Dupont
+Solde   : 1000.00€
+======================================
+
+========== RELEVÉ DE COMPTE ==========
+Numéro  : CPT000002
+Titulaire : Bob Martin
+Solde   : 500.00€
+======================================
+
+--- Opérations ---
+✅ Dépôt de 200.00€ effectué. Nouveau solde : 1200.00€
+✅ Retrait de 150.00€ effectué. Nouveau solde : 1050.00€
+❌ Solde insuffisant. Disponible : 1050.00€, Demandé : 2000.00€
+
+💸 Virement de 300.0€ vers Bob Martin
+✅ Retrait de 300.00€ effectué. Nouveau solde : 750.00€
+✅ Dépôt de 300.00€ effectué. Nouveau solde : 800.00€
+✅ Virement réussi
+
+========== RELEVÉ DE COMPTE ==========
+Numéro  : CPT000001
+Titulaire : Alice Dupont
+Solde   : 750.00€
+======================================
+
+========== RELEVÉ DE COMPTE ==========
+Numéro  : CPT000002
+Titulaire : Bob Martin
+Solde   : 800.00€
+======================================
+```

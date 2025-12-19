@@ -23,27 +23,28 @@
 hs_err_pid*
 replay_pid*
 
-# IntelliJ IDEA
+# IDE specific files
+## IntelliJ IDEA
 .idea/
 *.iml
 *.iws
 *.ipr
 out/
 
-# Eclipse
-.settings/
+## Eclipse
 .classpath
 .project
+.settings/
 bin/
 
-# NetBeans
-nbproject/
+## NetBeans
+build/
 nbbuild/
 dist/
 nbdist/
 .nb-gradle/
 
-# VS Code
+## VS Code
 .vscode/
 *.code-workspace
 
@@ -62,6 +63,9 @@ buildNumber.properties
 # Gradle
 .gradle/
 build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 # macOS
 .DS_Store
@@ -78,11 +82,13 @@ $RECYCLE.BIN/
 *~
 
 # Temporary files
-*.swp
-*.swo
 *.tmp
 *.bak
+*.swp
+*~.nib
+local.properties
 
-# Test files
-test_*.txt
-*.test
+# Test output
+test-output/
+*.log
+*.out
