@@ -1,0 +1,215 @@
+% ================================================
+% EXEMPLE DE SECTION COMPLÈTE AVEC INTÉGRATION GITHUB
+% Section 4 : Classes et Objets
+% ================================================
+
+\section{Classes et Objets}
+\label{sec:classes-objets}
+
+% ================================================
+% INTRODUCTION
+% ================================================
+
+\subsection{Introduction}
+
+La \textbf{Programmation Orientée Objet} (POO) repose sur le concept fondamental de \emph{classe} et d'\emph{objet}. Une classe est un modèle (ou \textit{blueprint}) qui définit les caractéristiques et comportements d'un type d'objet.
+
+\begin{definition}{Classe}
+    Une \textbf{classe} est une structure qui encapsule des données (attributs) et des comportements (méthodes) pour modéliser un concept du monde réel.
+\end{definition}
+
+\begin{definition}{Objet}
+    Un \textbf{objet} est une instance concrète d'une classe. C'est une entité qui possède un état (valeurs des attributs) et un comportement (méthodes).
+\end{definition}
+
+% ================================================
+% SYNTAXE
+% ================================================
+
+\subsection{Syntaxe d'une Classe}
+
+En Java, une classe se définit avec le mot-clé \java{class} :
+
+\begin{lstlisting}[language=Java, caption=Définition d'une classe Voiture]
+public class Voiture {
+    // Attributs (variables d'instance)
+    private String marque;
+    private String modele;
+    private int annee;
+    private double kilometrage;
+    private boolean estDemarree;
+    
+    // Constructeur par défaut
+    public Voiture() {
+        this.marque = "Inconnue";
+        this.modele = "Inconnu";
+        this.annee = 2024;
+        this.kilometrage = 0.0;
+        this.estDemarree = false;
+    }
+    
+    // Constructeur paramétré
+    public Voiture(String marque, String modele, int annee) {
+        this.marque = marque;
+        this.modele = modele;
+        this.annee = annee;
+        this.kilometrage = 0.0;
+        this.estDemarree = false;
+    }
+    
+    // Méthodes (comportements)
+    public void demarrer() {
+        if (!estDemarree) {
+            estDemarree = true;
+            System.out.println(marque + " " + modele + " a démarré");
+        }
+    }
+    
+    public void arreter() {
+        if (estDemarree) {
+            estDemarree = false;
+            System.out.println(marque + " " + modele + " s'est arrêtée");
+        }
+    }
+    
+    public void rouler(double distance) {
+        if (estDemarree) {
+            kilometrage += distance;
+            System.out.printf("Vous avez parcouru %.1f km%n", distance);
+        }
+    }
+}
+\end{lstlisting}
+
+% ================================================
+% ENCART GITHUB
+% ================================================
+
+\vspace{10pt}
+\begin{githubbox}{Ressources GitHub - Section 4}
+    \textbf{\faCode\ Exemples de Code}
+    \begin{itemize}
+        \item \githubexemple{04-Classes-Objets/exemples/Voiture.java}{Voiture.java} - Classe complète avec tests
+        \item \githubexemple{04-Classes-Objets/exemples/CompteBancaire.java}{CompteBancaire.java} - Gestion de compte bancaire
+        \item \href{\repourl/blob/main/04-Classes-Objets/exemples/screenshots/output-examples.txt}{\faTerminal\ Sorties d'exécution}
+    \end{itemize}
+    
+    \vspace{5pt}
+    
+    \textbf{\faPencilAlt\ Exercices Pratiques}
+    \begin{itemize}
+        \item \githubexercice{04-Classes-Objets/exercices/exercice1.md}{Énoncé : Classe Étudiant}
+        \item \githubexemple{04-Classes-Objets/solutions/Exercice1Solution.java}{Solution complète}
+    \end{itemize}
+    
+    \vspace{5pt}
+    
+    \textit{Accès direct :} \href{\repourl/tree/main/04-Classes-Objets}{\texttt{04-Classes-Objets/}}
+\end{githubbox}
+
+% ================================================
+% UTILISATION
+% ================================================
+
+\subsection{Création et Utilisation d'Objets}
+
+Pour utiliser une classe, on crée des \textbf{instances} (objets) :
+
+\begin{lstlisting}[language=Java, caption=Utilisation de la classe Voiture]
+public class TestVoiture {
+    public static void main(String[] args) {
+        // Création d'objets (instanciation)
+        Voiture voiture1 = new Voiture();
+        Voiture voiture2 = new Voiture("Peugeot", "308", 2023);
+        
+        // Utilisation des méthodes
+        voiture2.demarrer();
+        voiture2.rouler(50.5);
+        voiture2.arreter();
+    }
+}
+\end{lstlisting}
+
+\begin{remarque}
+    L'opérateur \java{new} alloue de la mémoire pour l'objet et appelle le constructeur correspondant.
+\end{remarque}
+
+% ================================================
+% ENCAPSULATION
+% ================================================
+
+\subsection{Encapsulation}
+
+L'\textbf{encapsulation} est un principe fondamental de la POO qui consiste \`a :
+\begin{itemize}
+    \item Rendre les attributs \java{private}
+    \item Fournir des méthodes \java{public} pour y accéder (\textit{getters} et \textit{setters})
+\end{itemize}
+
+\begin{exemple}{Getters et Setters}
+\begin{lstlisting}[language=Java]
+public class Voiture {
+    private String marque;
+    
+    // Getter
+    public String getMarque() {
+        return marque;
+    }
+    
+    // Setter avec validation
+    public void setMarque(String marque) {
+        if (marque != null && !marque.isEmpty()) {
+            this.marque = marque;
+        } else {
+            throw new IllegalArgumentException("Marque invalide");
+        }
+    }
+}
+\end{lstlisting}
+\end{exemple}
+
+% ================================================
+% EXERCICES
+% ================================================
+
+\subsection{Exercices}
+
+\begin{exercice}{1 - Classe Étudiant}
+    Créer une classe \javaclass{Etudiant} avec les attributs suivants :
+    \begin{itemize}
+        \item \java{matricule} (String)
+        \item \java{nom} et \java{prenom} (String)
+        \item \java{moyenne} (double)
+        \item \java{nbAbsences} (int)
+    \end{itemize}
+    
+    Implémenter :
+    \begin{itemize}
+        \item Constructeurs (par défaut et paramétré)
+        \item Getters et setters avec validation
+        \item Méthode \javamethod{estAdmis} (retourne \java{true} si moyenne $\geq$ 10)
+        \item Méthode \javamethod{afficher} (affiche toutes les informations)
+    \end{itemize}
+    
+    \vspace{5pt}
+    
+    \textbf{\faGithub\ Solution :} \githubexemple{04-Classes-Objets/solutions/Exercice1Solution.java}{Voir sur GitHub}
+\end{exercice}
+
+% ================================================
+% RÉSUMÉ
+% ================================================
+
+\subsection{Points Clés}
+
+\begin{itemize}
+    \item Une \textbf{classe} est un modèle, un \textbf{objet} est une instance
+    \item Les \textbf{attributs} représentent l'état, les \textbf{méthodes} le comportement
+    \item L'\textbf{encapsulation} protège les données
+    \item Les \textbf{constructeurs} initialisent les objets
+    \item Le mot-clé \java{this} référence l'objet courant
+\end{itemize}
+
+% ================================================
+% FIN DE LA SECTION
+% ================================================

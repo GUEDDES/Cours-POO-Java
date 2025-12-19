@@ -1,0 +1,204 @@
+% ================================================
+% DOCUMENT PRINCIPAL - COURS POO JAVA
+% ================================================
+
+% Inclure le préambule
+\input{preambule-complet.tex}
+
+% ================================================
+% DÉBUT DU DOCUMENT
+% ================================================
+
+\begin{document}
+
+% ================================================
+% PAGE DE TITRE
+% ================================================
+
+\maketitle
+\thispagestyle{empty}
+
+% ================================================
+% ENCART GITHUB PRINCIPAL
+% ================================================
+
+\vspace{1cm}
+
+\begin{tcolorbox}[colback=githubblue!5!white, colframe=githubblue, boxrule=1.5pt, arc=5mm]
+    \centering
+    \Large \faGithub\ \textbf{Dépôt GitHub du Cours}
+    
+    \vspace{8pt}
+    
+    \large Tous les exemples, exercices, diagrammes et solutions sont disponibles sur :
+    
+    \vspace{5pt}
+    
+    {\LARGE \href{\repourl}{\texttt{github.com/GUEDDES/Cours-POO-Java}}}
+    
+    \vspace{8pt}
+    
+    \begin{minipage}{0.6\textwidth}
+        \textbf{Contenu du dépôt :}
+        \begin{itemize}
+            \item \faCode\ 9 exemples de code complets
+            \item \faPencilAlt\ 8 exercices avec solutions
+            \item \faProjectDiagram\ 3 diagrammes UML
+            \item \faTerminal\ Sorties d'exécution
+            \item \faBook\ Documentation complète
+        \end{itemize}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.35\textwidth}
+        \centering
+        \qrcode[height=4cm]{\repourl}
+        
+        \small Scannez pour accéder
+    \end{minipage}
+\end{tcolorbox}
+
+\vspace{1cm}
+
+\begin{center}
+    \textit{Ce cours est mis \`a jour régulièrement sur GitHub}
+\end{center}
+
+\newpage
+
+% ================================================
+% TABLE DES MATIÈRES
+% ================================================
+
+\tableofcontents
+\newpage
+
+% ================================================
+% SECTION 1 : INTRODUCTION
+% ================================================
+
+\section{Introduction à la POO}
+\label{sec:introduction}
+
+\subsection{Qu'est-ce que la POO ?}
+
+La Programmation Orientée Objet (POO) est un paradigme de programmation...
+
+\voirgithub{Exercices Section 1}{01-Introduction/exercices}
+
+% ================================================
+% SECTION 2 : GÉNIE LOGICIEL
+% ================================================
+
+\section{Génie Logiciel}
+\label{sec:genie-logiciel}
+
+\subsection{Cycle de vie du logiciel}
+
+Le développement d'un logiciel suit plusieurs phases...
+
+\voirgithub{Exercices avec solutions}{02-Genie-Logiciel/exercices}
+
+% ================================================
+% SECTION 3 : BASES DE JAVA
+% ================================================
+
+\section{Bases de Java}
+\label{sec:bases-java}
+
+\subsection{Syntaxe de base}
+
+Java utilise une syntaxe similaire au C++...
+
+\begin{githubbox}{Exemples de Code}
+    \textbf{\faCode\ Trois exemples disponibles}
+    \begin{itemize}
+        \item \githubexemple{03-Java-Bases/exemples/HelloWorld.java}{HelloWorld.java}
+        \item \githubexemple{03-Java-Bases/exemples/CalculatriceSimple.java}{CalculatriceSimple.java}
+        \item \githubexemple{03-Java-Bases/exemples/GestionTableaux.java}{GestionTableaux.java}
+    \end{itemize}
+\end{githubbox}
+
+% ================================================
+% SECTION 4 : CLASSES ET OBJETS
+% ================================================
+
+% Inclure la section complète depuis le fichier séparé
+\input{exemple-section-complete.tex}
+
+% ================================================
+% SECTIONS SUIVANTES (5-12)
+% ================================================
+
+\section{\u00c9léments Statiques}
+\label{sec:elements-statiques}
+
+% Contenu...
+
+\voirgithub{Exemple : Classe Calculatrice}{05-Elements-Statiques/exemples/Calculatrice.java}
+
+%------------------------------------------------
+
+\section{Relations entre Classes}
+\label{sec:relations}
+
+% Contenu...
+
+\begin{githubbox}{Exemples et Diagrammes}
+    \textbf{\faProjectDiagram\ Modélisation}
+    \begin{itemize}
+        \item \href{\repourl/tree/main/06-Relations-Classes/diagrammes}{Diagrammes UML}
+        \item \githubexemple{06-Relations-Classes/exemples/VoitureMoteur.java}{Composition : VoitureMoteur}
+        \item \githubexemple{06-Relations-Classes/exemples/UniversiteEtudiant.java}{Agrégation : Université}
+    \end{itemize}
+\end{githubbox}
+
+%------------------------------------------------
+
+\section{Héritage}
+\label{sec:heritage}
+
+% Contenu...
+
+\voirgithub{Exemple : Hiérarchie Animal}{09-Heritage/exemples/AnimalHierarchie.java}
+
+%------------------------------------------------
+
+\section{Polymorphisme}
+\label{sec:polymorphisme}
+
+% Contenu...
+
+\voirgithub{Exemple : Système de Paiement}{10-Polymorphisme/exemples/SystemePaiement.java}
+
+%------------------------------------------------
+
+\section{Exceptions}
+\label{sec:exceptions}
+
+% Contenu...
+
+\voirgithub{Exemple : Gestion de Fichiers}{12-Exceptions/exemples/GestionFichiers.java}
+
+% ================================================
+% CONCLUSION
+% ================================================
+
+\section{Conclusion}
+
+Ce cours a couvert les concepts fondamentaux de la POO en Java...
+
+\vspace{10pt}
+
+\begin{center}
+    \Large \textbf{Pour aller plus loin}
+    
+    \vspace{5pt}
+    
+    \githubrepo
+\end{center}
+
+% ================================================
+% FIN DU DOCUMENT
+% ================================================
+
+\end{document}
