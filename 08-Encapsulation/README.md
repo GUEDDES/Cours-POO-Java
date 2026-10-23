@@ -470,9 +470,6 @@ class CompteBancaire {
             throw new IllegalArgumentException("Solde invalide");
         }
     }
-    
-    // Toutes les modifications passent par cette méthode
-    // = Un seul endroit à maintenir
 }
 ```
 
@@ -481,16 +478,6 @@ class CompteBancaire {
 ### 5.2 Flexibilité : Changement d'Implémentation
 
 ```java
-// Version 1 : Attribut simple
-class Produit {
-    private double prix;
-    
-    public double getPrix() {
-        return prix;
-    }
-}
-
-// Version 2 : Calcul dynamique (sans changer l'interface)
 class Produit {
     private double prixBase;
     private double remise;  // En pourcentage
@@ -499,9 +486,6 @@ class Produit {
         return prixBase * (1 - remise / 100);
     }
 }
-
-// Le code client reste INCHANGÉ !
-produit.getPrix();  // Fonctionne dans les 2 versions
 ```
 
 ---
@@ -515,8 +499,6 @@ class CompteBancaire {
     public void setSolde(double nouveauSolde) {
         double ancienSolde = this.solde;
         this.solde = nouveauSolde;
-        
-        // Log automatique
         System.out.println("[LOG] Solde modifié : " + ancienSolde + " → " + nouveauSolde);
     }
 }
@@ -537,7 +519,7 @@ class CompteBancaire {
 
 ## 🎯 Points à Retenir
 
-1. **Attributs** toujours **privs** (`private`)
+1. **Attributs** toujours **privés** (`private`)
 2. **Accès** via **getters/setters**
 3. **Validation** dans les setters
 4. Pas de setter pour les attributs **immuables**

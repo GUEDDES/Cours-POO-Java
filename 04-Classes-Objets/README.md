@@ -6,9 +6,10 @@
 - Définir une classe en Java
 - Créer et manipuler des objets
 - Écrire des constructeurs (avec et sans paramètres)
-- Utiliser le mot-clé `this`
+- Utiliser le mot-clé `this` pour lever l'ambiguïté et chaîner les constructeurs
 - Comprendre la surcharge de méthodes
 - Maîtriser le Garbage Collector
+- Comprendre le contrat fondamental de la classe `Object` (`equals` et `hashCode`)
 
 ---
 
@@ -206,19 +207,6 @@ class Smartphone {
 }
 ```
 
-**Utilisation** :
-```java
-// Avant (sans constructeur)
-Smartphone tel1 = new Smartphone();
-tel1.marque = "Apple";
-tel1.modele = "iPhone 15";
-tel1.batterie = 100;
-
-// Maintenant (avec constructeur)
-Smartphone tel2 = new Smartphone("Apple", "iPhone 15", 100);
-tel2.afficherInfos();  // Apple iPhone 15 - 100%
-```
-
 ---
 
 ## 4. Le Mot-Clé `this`
@@ -242,17 +230,9 @@ class Smartphone {
 }
 ```
 
-**Sans `this`** :
-```java
-Smartphone(String marque, String modele, int batterie) {
-    marque = marque;  // ❌ Affecte le paramètre à lui-même !
-    // L'attribut reste null
-}
-```
-
 ---
 
-### 4.2 Appeler un Autre Constructeur
+### 4.2 Appeler un Autre Constructeur (`this(...)`)
 
 ```java
 class Smartphone {
@@ -279,13 +259,6 @@ class Smartphone {
 }
 ```
 
-**Utilisation** :
-```java
-Smartphone tel1 = new Smartphone("Apple", "iPhone", 95);
-Smartphone tel2 = new Smartphone("Samsung", "Galaxy");  // Batterie = 100
-Smartphone tel3 = new Smartphone();  // Marque = "Inconnu", Batterie = 0
-```
-
 ---
 
 ## 5. Surcharge de Méthodes
@@ -296,30 +269,18 @@ La **surcharge** permet d'avoir **plusieurs méthodes avec le même nom** mais d
 
 ```java
 class Calculatrice {
-    // Addition de 2 entiers
     int additionner(int a, int b) {
         return a + b;
     }
     
-    // Addition de 3 entiers (SURCHARGE)
     int additionner(int a, int b, int c) {
         return a + b + c;
     }
     
-    // Addition de 2 doubles (SURCHARGE)
     double additionner(double a, double b) {
         return a + b;
     }
 }
-```
-
-**Utilisation** :
-```java
-Calculatrice calc = new Calculatrice();
-
-System.out.println(calc.additionner(5, 3));        // 8
-System.out.println(calc.additionner(5, 3, 2));     // 10
-System.out.println(calc.additionner(5.5, 3.2));    // 8.7
 ```
 
 ---
@@ -328,181 +289,36 @@ System.out.println(calc.additionner(5.5, 3.2));    // 8.7
 
 **Signature = Nom + Types des paramètres (dans l'ordre)**
 
-```java
-// ✅ VALIDE : Signatures différentes
-void methode(int a)              // Signature 1
-void methode(double a)           // Signature 2
-void methode(int a, int b)       // Signature 3
-void methode(int a, double b)    // Signature 4
-
-// ❌ ERREUR : Même signature
-int methode(int a)               // ❌ Même que Signature 1
-// Le type de retour ne fait PAS partie de la signature
-```
+Le type de retour et les modificateurs ne font **PAS** partie de la signature.
 
 ---
 
 ## 6. Initialisation par Défaut
 
-### 6.1 Valeurs par Défaut des Attributs
-
-En Java, les attributs sont **automatiquement initialisés** avec des valeurs par défaut :
-
-| Type | Valeur par défaut |
-|------|------------------|
-| `byte`, `short`, `int`, `long` | `0` |
-| `float`, `double` | `0.0` |
-| `char` | `'\u0000'` (caractère null) |
-| `boolean` | `false` |
-| Objets (String, etc.) | `null` |
-
-```java
-class Test {
-    int nombre;       // 0
-    double prix;      // 0.0
-    boolean actif;    // false
-    String nom;       // null
-    
-    void afficher() {
-        System.out.println("nombre = " + nombre);  // 0
-        System.out.println("prix = " + prix);      // 0.0
-        System.out.println("actif = " + actif);    // false
-        System.out.println("nom = " + nom);        // null
-    }
-}
-```
-
-⚠️ **Attention** : Les **variables locales** (dans les méthodes) ne sont PAS initialisées automatiquement !
-
-```java
-void methode() {
-    int x;
-    System.out.println(x);  // ❌ ERREUR : x non initialisé
-}
-```
+En Java, les attributs sont **automatiquement initialisés** avec des valeurs par défaut (`0`, `0.0`, `false`, `null`). Les **variables locales** doivent obligatoirement être initialisées avant lecture.
 
 ---
 
 ## 7. Gestion de la Mémoire : Garbage Collector
 
-### 7.1 Principe
-
-En Java, vous n'avez **pas besoin de libérer manuellement la mémoire**. Le **Garbage Collector** (GC) s'en charge automatiquement.
-
-**Fonctionnement** :
-```
-1. Un objet est créé avec new
-2. Il est utilisé
-3. Quand plus aucune référence ne pointe vers lui → GC le supprime
-```
+En Java, le ramasse-miettes (**Garbage Collector**) désalloue automatiquement la mémoire des objets non référencés.
 
 ---
 
-### 7.2 Exemple
+## 8. La Classe Object et son Contrat
+
+Toutes les classes en Java héritent implicitement de la classe racine `java.lang.Object`.
+
+### 8.1 Méthode `toString()`
+Retourne une chaîne décrivant l'objet textuellement.
+
+### 8.2 Le Contrat `equals(Object)` et `hashCode()`
+
+Pour comparer le **contenu logique** de deux objets et non leur adresse en mémoire :
 
 ```java
-public class TestGC {
-    public static void main(String[] args) {
-        // Créer un objet
-        Smartphone tel1 = new Smartphone("Apple", "iPhone", 100);
-        
-        // Créer un deuxième objet
-        Smartphone tel2 = new Smartphone("Samsung", "Galaxy", 85);
-        
-        // Réaffecter tel1
-        tel1 = tel2;  // L'ancien objet "iPhone" n'est plus référencé
-        
-        // ✅ Le Garbage Collector va automatiquement libérer
-        // la mémoire de l'objet "iPhone"
-        
-        // Supprimer toutes les références
-        tel1 = null;
-        tel2 = null;  // Les 2 objets seront collectés par le GC
-    }
-}
-```
+import java.util.Objects;
 
-**Schéma** :
-```
-Avant tel1 = tel2 :
-tel1 ──→ [iPhone]   tel2 ──→ [Galaxy]
-
-Après tel1 = tel2 :
-tel1 ──→ [Galaxy]   tel2 ──→ [Galaxy]
-         ↑──────────────────┘
-         
-[iPhone]  ← Plus aucune référence → GC le supprime
-```
-
----
-
-### 7.3 Forcer le Garbage Collector (déconseillé)
-
-```java
-System.gc();  // Suggère au GC de se lancer (pas garanti)
-```
-
-⚠️ **Ne PAS utiliser en production** : Le GC sait mieux que vous quand se lancer !
-
----
-
-## 8. La Classe Object
-
-### 8.1 Hiérarchie des Classes
-
-En Java, **toutes les classes héritent implicitement de `Object`**.
-
-```
-        Object (classe mère de toutes les classes)
-          ↑
-          |
-    Smartphone, Livre, CompteBancaire, etc.
-```
-
----
-
-### 8.2 Méthodes Importantes de Object
-
-#### toString()
-
-Retourne une représentation textuelle de l'objet.
-
-```java
-class Smartphone {
-    String marque;
-    String modele;
-    
-    Smartphone(String marque, String modele) {
-        this.marque = marque;
-        this.modele = modele;
-    }
-    
-    // Redéfinition de toString()
-    @Override
-    public String toString() {
-        return marque + " " + modele;
-    }
-}
-```
-
-**Utilisation** :
-```java
-Smartphone tel = new Smartphone("Apple", "iPhone 15");
-
-// Sans toString() redéfini
-System.out.println(tel);  // Smartphone@15db9742 (adresse mémoire)
-
-// Avec toString() redéfini
-System.out.println(tel);  // Apple iPhone 15
-```
-
----
-
-#### equals(Object obj)
-
-Compare deux objets pour vérifier s'ils sont "égaux".
-
-```java
 class Smartphone {
     String marque;
     String modele;
@@ -518,19 +334,30 @@ class Smartphone {
         if (obj == null || getClass() != obj.getClass()) return false;
         
         Smartphone autre = (Smartphone) obj;
-        return marque.equals(autre.marque) && modele.equals(autre.modele);
+        return Objects.equals(marque, autre.marque) && Objects.equals(modele, autre.modele);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(marque, modele);
     }
 }
 ```
 
-**Utilisation** :
-```java
-Smartphone tel1 = new Smartphone("Apple", "iPhone");
-Smartphone tel2 = new Smartphone("Apple", "iPhone");
+> ⚠️ **Règle d'or du contrat Java** : Si deux objets sont égaux selon `equals()`, ils **DOIVENT impérativement renvoyer le même entier via `hashCode()`**. Sans cela, l'insertion dans des tables de hachage (`HashSet`, `HashMap`) échoue silencieusement.
 
-System.out.println(tel1 == tel2);        // false (références différentes)
-System.out.println(tel1.equals(tel2));   // true (contenu identique)
-```
+---
+
+## 9. Pièges Fréquents & Anti-Patterns
+
+| Piège fréquent | Erreur constatée | Solution rigoureuse |
+| :--- | :--- | :--- |
+| **Comparaison par `==`** | `s1 == s2` compare les pointeurs mémoire, pas les valeurs. | Toujours utiliser `s1.equals(s2)`. |
+| **Oubli de `hashCode()`** | Redéfinir `equals()` seul. | Toujours redéfinir `hashCode()` en tandem avec `equals()`. |
+| **Variables locales non initialisées** | `int x; System.out.println(x);` (erreur compilation). | Affecter une valeur explicite avant la première lecture. |
+| **Oubli du mot-clé `this`** | `marque = marque;` n'affecte pas l'attribut d'instance. | Utiliser `this.marque = marque;`. |
+
+> 💡 **Remarque didactique** : Pour faciliter l'initiation aux objets, les attributs de cette section ont une visibilité par défaut. Dès la **[Section 8 : Encapsulation](../08-Encapsulation/)**, vous découvrirez comment protéger vos données avec `private` et des accesseurs validés.
 
 ---
 
@@ -540,21 +367,10 @@ System.out.println(tel1.equals(tel2));   // true (contenu identique)
 |---------|-------------|
 | **Classe** | Modèle définissant attributs + méthodes |
 | **Objet** | Instance concrète créée avec `new` |
-| **Constructeur** | Méthode spéciale pour initialiser un objet |
-| **`this`** | Référence à l'objet courant |
-| **Surcharge** | Plusieurs méthodes avec le même nom mais signatures différentes |
-| **Garbage Collector** | Libère automatiquement la mémoire |
-| **Object** | Classe mère de toutes les classes Java |
-
----
-
-## 🎯 Points à Retenir
-
-1. **Constructeur** = même nom que la classe, pas de type de retour
-2. Utilisez **`this`** pour lever l'ambiguïté paramètres/attributs
-3. La **surcharge** permet de créer plusieurs versions d'une méthode
-4. Les **attributs** sont initialisés automatiquement, pas les **variables locales**
-5. Le **Garbage Collector** gère la mémoire automatiquement
+| **Constructeur** | Initialise un nouvel objet lors de sa création |
+| **`this`** | Référence à l'instance courante |
+| **Surcharge** | Même nom, listes de paramètres différentes |
+| **Object** | Mère universelle : respecter `equals()` et `hashCode()` |
 
 ---
 
