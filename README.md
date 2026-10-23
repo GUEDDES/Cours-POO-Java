@@ -6,8 +6,8 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Progression](https://img.shields.io/badge/Progression-100%25-success.svg)](#)
 [![Exemples](https://img.shields.io/badge/Exemples-9-brightgreen.svg)](#)
-[![Exercices](https://img.shields.io/badge/Exercices-8-yellow.svg)](#)
-[![Solutions](https://img.shields.io/badge/Solutions-8%2F8-success.svg)](#)
+[![Exercices](https://img.shields.io/badge/Exercices-10-yellow.svg)](#)
+[![Solutions](https://img.shields.io/badge/Solutions-10%2F10-success.svg)](#)
 [![UML](https://img.shields.io/badge/Diagrammes_UML-3-blueviolet.svg)](#)
 [![TDs](https://img.shields.io/badge/TDs-3-informational.svg)](#-travaux-dirigés-tds)
 
@@ -50,7 +50,7 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - **12 sections complètes** avec théorie détaillée
 - **3 Travaux Dirigés (TDs)** avec énoncés et corrections
 - **9 exemples de code** fonctionnels et commentés
-- **8 exercices** avec solutions complètes
+- **10 exercices** avec solutions complètes
 - **3 diagrammes UML** (PlantUML)
 - **Documentation complète** (README, CONTRIBUTING, LICENSE, SCREENSHOTS)
 
@@ -137,10 +137,11 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Définir une classe
 - Créer et manipuler des objets
 - Constructeurs et surcharge
-- Le mot-clé `this`
+- Le mot-clé `this` et chaînage
 - Garbage Collector
+- Contrat `equals` et `hashCode`
 - **2 exemples** : Voiture, CompteBancaire
-- **1 exercice** : Classe Étudiant (avec solution)
+- **2 exercices** : Classe Étudiant, Catalogue & Contrat d'Égalité (avec solutions)
 
 ---
 
@@ -208,11 +209,11 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 
 - Polymorphisme et liaison dynamique
 - Classes abstraites
-- Interfaces
+- Interfaces multiples
 - Casting (upcast/downcast)
 - Opérateur `instanceof`
 - **1 exemple** : SystemePaiement (CarteBancaire, PayPal, Especes)
-- **1 exercice** : Formes Géométriques (avec solution)
+- **2 exercices** : Formes Géométriques, Moteur de Facturation & Remises Polymorphes (avec solutions)
 - **📊 Diagramme UML** : Polymorphisme avec classes abstraites et interfaces
 
 ---
@@ -236,8 +237,9 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 - Déclarer des exceptions (`throws`)
 - Exceptions vérifiées vs non vérifiées
 - Créer des exceptions personnalisées
+- Transactions et intégrité des données
 - **1 exemple** : GestionFichiers avec exceptions personnalisées
-- **1 exercice** : Comptes Bancaires (avec solution)
+- **2 exercices** : Comptes Bancaires, Système de Transactions & Audit (avec solutions)
 
 ---
 
@@ -265,8 +267,7 @@ Ce cours est conçu pour les étudiants souhaitant **maîtriser la Programmation
 
 ### Logiciels nécessaires
 
-- ☕ **Java JDK 17+** : [Télécharger](https://www.oracle.com/java/technologies/downloads/)
-- 🔧 **IDE recommandé** :
+- ☕ **Java JDK 17+** : [Télécharger](https://www.oracle.com/java/technologies/downloads/)\n- 🔧 **IDE recommandé** :
   - [IntelliJ IDEA Community](https://www.jetbrains.com/idea/download/) (recommandé)
   - [Eclipse](https://www.eclipse.org/downloads/)
   - [VS Code](https://code.visualstudio.com/) + Extension Java
@@ -375,8 +376,8 @@ Si ce cours vous a été utile :
 - ✏️ **3 TDs** avec corrections complètes
 - 💻 **9 exemples** de code fonctionnels
 - 📊 **3 diagrammes** UML
-- ✏️ **8 exercices** avec solutions
-- 📚 **~7000 lignes** de documentation
+- ✏️ **10 exercices** avec solutions
+- 📚 **~7500 lignes** de documentation
 - 👥 **1+ contributeur**
 
 ---
